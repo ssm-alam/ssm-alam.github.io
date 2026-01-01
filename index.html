@@ -7,54 +7,90 @@
 </head>
 <body>
 
-<!-- ===== Top Navigation ===== -->
+<!-- ===== Navigation ===== -->
 <nav>
-  <a href="index.html">Home</a>
-  <a href="research.html">Research</a>
-  <a href="publications.html">Publications</a>
-  <a href="conferences.html">Conferences</a>
+  <a href="#home">Home</a>
+  <a href="#research">Research</a>
+  <a href="#projects">Projects</a>
+  <a href="#publications">Publications</a>
 </nav>
 
-<hr>
+<!-- ================= HOME SECTION ================= -->
+<div id="home" class="section">
+  <hr>
 
-<!-- ===== Name + Image Section ===== -->
-<div style="display:flex; justify-content:space-between; align-items:flex-start; margin-top:40px;">
+  <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+    <div>
+      <h1>Mahafujul Alam</h1>
+      <p style="font-size:1.1em; color:#555;">Researcher</p>
+    </div>
 
-  <!-- Left Text -->
-  <div>
-    <h1 style="margin-bottom:10px;">Mahafujul Alam</h1>
-    <p style="font-size:1.1em; color:#555; margin-top:0;">
-      Researcher
-    </p>
+    <div>
+      <img src="assets/images/profile.jpg"
+           alt="Profile photo"
+           style="width:180px; border-radius:6px; box-shadow:0 4px 10px rgba(0,0,0,0.15);">
+    </div>
   </div>
 
-  <!-- Right Image -->
-  <div>
-    <img src="assets/images/profile.jpeg"
-         alt="Profile photo"
-         style="width:180px; border-radius:6px; box-shadow:0 4px 10px rgba(0,0,0,0.15);">
-  </div>
-
+  <hr>
 </div>
 
-<hr style="margin:40px 0;">
+<!-- ================= RESEARCH EXPERIENCE ================= -->
+<div id="research" class="section">
+  <h2>Research Experience</h2>
 
-<!-- ===== Research Interest ===== -->
-<h2>Research Interest</h2>
+  <p>
+    My research focuses on structure-guided cancer immunotherapy with a primary emphasis on
+    immune checkpoint molecules such as PD-1/PD-L1, CTLA-4, and VISTA. I apply computational
+    approaches including molecular docking, molecular dynamics simulations, and
+    immunoinformatics to investigate immune checkpoint regulation and therapeutic modulation.
+  </p>
 
-<p>
-Cancer immunotherapy has emerged as a powerful strategy for controlling cancer progression
-by harnessing the host immune system. Immune checkpoint molecules such as PD-1/PD-L1,
-CTLA-4, and VISTA play critical roles in tumor-mediated immune suppression.
-My research interest lies in understanding the structural and functional mechanisms
-governing these immune checkpoints and exploring computational strategies to modulate
-their activity. By targeting immune checkpoint signaling, this work aims to contribute
-to the development of novel therapeutic strategies for effective cancer immunotherapy.
-</p>
+  <p>
+    My doctoral work integrates protein structure analysis, epitope prediction,
+    mutation impact assessment, and simulation-based validation to support the rational
+    design of immune checkpoint inhibitors and vaccine candidates.
+  </p>
+</div>
 
-<hr style="margin:50px 0;">
+<!-- ================= PROJECTS ================= -->
+<div id="projects" class="section">
+  <h2>Projects</h2>
 
-<!-- ===== Footer ===== -->
+  <div class="project">
+    <h3>PD-L1 Multi-epitope Cancer Vaccine</h3>
+    <p>
+      Designed a multi-epitope cancer vaccine targeting PD-L1 using immunoinformatics.
+      CTL, HTL, and B-cell epitopes were predicted, assembled, and validated through
+      molecular docking, molecular dynamics simulations, and immune response modeling.
+    </p>
+    <!-- Image can be added later -->
+    <!-- <img src="assets/images/project1.png" width="400"> -->
+  </div>
+
+  <div class="project">
+    <h3>Structural Impact of nsSNPs in CD274</h3>
+    <p>
+      Investigated the effects of non-synonymous SNPs on PD-L1 structure, stability,
+      and interaction with PD-1 using structure prediction, stability analysis,
+      and simulation-based approaches.
+    </p>
+  </div>
+</div>
+
+<!-- ================= PUBLICATIONS ================= -->
+<div id="publications" class="section">
+  <h2>Publications</h2>
+
+  <ol>
+    <li>Immunoinformatics-based design of a multi-epitope cancer vaccine targeting PD-L1 (2025)</li>
+    <li>Structural insights into non-synonymous SNPs in CD274 affecting PD-1/PD-L1 interaction (2025)</li>
+    <li>Structure-guided identification of phytochemical inhibitors targeting PD-L1 (Accepted)</li>
+  </ol>
+</div>
+
+<!-- ================= FOOTER ================= -->
+<hr>
 <footer>
   Academic research website | Hosted on GitHub Pages
 </footer>
