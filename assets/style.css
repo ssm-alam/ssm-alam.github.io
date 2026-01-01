@@ -1,91 +1,20 @@
-/* ====== Global Page Style ====== */
-body {
-  font-family: "Georgia", serif;
-  max-width: 900px;
-  margin: 40px auto;
-  line-height: 1.7;
-  color: #222;
-  background-color: #ffffff;
+/* ===== Section spacing ===== */
+.section {
+  margin: 80px 0;
 }
 
-/* ====== Navigation Bar ====== */
-nav {
-  border-bottom: 1px solid #ddd;
-  margin-bottom: 30px;
-  padding-bottom: 10px;
+.section hr {
+  margin-bottom: 40px;
 }
 
-nav a {
-  margin-right: 20px;
-  text-decoration: none;
-  color: #0056b3;
-  font-weight: bold;
+/* ===== Section titles ===== */
+.section h2 {
+  margin-bottom: 20px;
 }
 
-nav a:hover {
-  text-decoration: underline;
-}
-
-/* ====== Headings ====== */
-h1, h2, h3 {
-  color: #003366;
-  margin-top: 20px;
-}
-
-/* ====== Highlight Box ====== */
-.highlight {
-  background: #f4f8ff;
-  padding: 15px;
-  border-left: 4px solid #003366;
-  margin: 25px 0;
-}
-
-/* ====== Footer ====== */
-footer {
-  margin-top: 50px;
-  font-size: 0.9em;
-  color: #666;
-  border-top: 1px solid #ddd;
-  padding-top: 10px;
-}
-
-/* ====== Animated Name ====== */
-.name-animate {
-  font-size: 2.2em;
-  font-weight: bold;
-  opacity: 0;
-  animation: fadeSlide 1.5s ease-out forwards;
-}
-
-@keyframes fadeSlide {
-  from {
-    opacity: 0;
-    transform: translateY(15px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* ====== Profile Image ====== */
-.profile-img {
-  width: 100%;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-}
-
-/* ====== Layout Helper (Home Page) ====== */
-.home-container {
-  display: flex;
-  align-items: center;
-  gap: 40px;
-}
-
-.home-text {
-  flex: 2;
-}
-
-.home-image {
-  flex: 1;
+/* ===== Project box ===== */
+.project {
+  margin-bottom: 40px;
+  padding-left: 15px;
+  border-left: 3px solid #003366;
 }
