@@ -1,15 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+        content="Academic and research website of Syed Sahajada Mahafujul Alam">
+
+    <meta name="keywords"
+        content="Syed Sahajada Mahafujul Alam, computational biology, cancer immunotherapy, bioinformatics, molecular docking, molecular dynamics">
 
     <title>Syed Sahajada Mahafujul Alam | Researcher</title>
 
-    <meta name="description"
-          content="Academic and research profile of Syed Sahajada Mahafujul Alam, working in computational biology, cancer immunotherapy, bioinformatics and molecular drug discovery.">
 
     <style>
+
+        /* ================================
+           GLOBAL
+        ================================= */
+
         * {
             margin: 0;
             padding: 0;
@@ -18,7 +30,15 @@
         }
 
         body {
-            font-family: Arial, Helvetica, sans-serif;
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Roboto,
+                Helvetica,
+                Arial,
+                sans-serif;
+
             background: #f7f9fc;
             color: #172033;
             line-height: 1.6;
@@ -29,413 +49,1058 @@
             color: inherit;
         }
 
-        /* NAVIGATION */
+        img {
+            max-width: 100%;
+        }
+
+        .container {
+            max-width: 1180px;
+            margin: auto;
+            padding-left: 25px;
+            padding-right: 25px;
+        }
+
+
+        /* ================================
+           NAVIGATION
+        ================================= */
 
         nav {
             position: sticky;
             top: 0;
             z-index: 1000;
-            background: rgba(255,255,255,0.95);
-            backdrop-filter: blur(10px);
+
+            background: rgba(255,255,255,0.96);
+
+            backdrop-filter: blur(12px);
+
             border-bottom: 1px solid #e5e9f0;
         }
 
         .nav-container {
-            max-width: 1150px;
+
+            max-width: 1180px;
+
             margin: auto;
-            padding: 18px 25px;
+
+            padding: 17px 25px;
+
             display: flex;
+
             justify-content: space-between;
+
             align-items: center;
         }
 
         .logo {
+
             font-size: 20px;
-            font-weight: 700;
+
+            font-weight: 800;
+
             color: #0b5ed7;
         }
 
         .nav-links {
+
             display: flex;
-            gap: 25px;
+
             list-style: none;
+
+            gap: 25px;
+
             font-size: 14px;
+
+            font-weight: 500;
+        }
+
+        .nav-links a {
+
+            color: #3c4659;
+
+            transition: 0.2s;
         }
 
         .nav-links a:hover {
+
             color: #0b5ed7;
         }
 
-        /* HERO */
+
+        /* ================================
+           HERO
+        ================================= */
 
         .hero {
+
             min-height: 88vh;
+
             display: flex;
+
             align-items: center;
+
             background:
-                radial-gradient(circle at 85% 20%, #dcecff 0, transparent 30%),
-                radial-gradient(circle at 10% 80%, #e7f7f4 0, transparent 30%),
+
+                radial-gradient(
+                    circle at 85% 20%,
+                    #dcecff 0,
+                    transparent 30%
+                ),
+
+                radial-gradient(
+                    circle at 10% 80%,
+                    #e5f7f2 0,
+                    transparent 30%
+                ),
+
                 #ffffff;
         }
 
         .hero-container {
-            max-width: 1150px;
+
             width: 100%;
+
+            max-width: 1180px;
+
             margin: auto;
-            padding: 80px 25px;
+
+            padding: 100px 25px;
         }
 
         .hero-content {
-            max-width: 850px;
+
+            max-width: 900px;
         }
 
         .tag {
+
             display: inline-block;
-            padding: 7px 14px;
+
+            padding: 8px 15px;
+
             border-radius: 30px;
+
             background: #eaf3ff;
+
             color: #0b5ed7;
+
             font-size: 13px;
-            font-weight: 600;
+
+            font-weight: 700;
+
             margin-bottom: 22px;
         }
 
         .hero h1 {
-            font-size: clamp(42px, 7vw, 76px);
-            line-height: 1.05;
+
+            font-size: clamp(
+                43px,
+                7vw,
+                78px
+            );
+
+            line-height: 1.03;
+
+            letter-spacing: -3px;
+
             margin-bottom: 25px;
-            letter-spacing: -2px;
         }
 
         .hero h1 span {
+
             color: #0b5ed7;
         }
 
-        .hero p {
+        .hero-description {
+
             font-size: 20px;
-            max-width: 750px;
-            color: #586174;
+
+            max-width: 800px;
+
+            color: #596477;
+
             margin-bottom: 32px;
         }
 
         .buttons {
+
             display: flex;
-            gap: 15px;
+
+            gap: 14px;
+
             flex-wrap: wrap;
         }
 
         .btn {
-            padding: 13px 22px;
-            border-radius: 8px;
-            font-weight: 600;
+
             display: inline-block;
+
+            padding: 13px 22px;
+
+            border-radius: 8px;
+
+            font-weight: 700;
+
+            font-size: 14px;
+
+            transition: 0.2s;
         }
 
         .btn-primary {
+
             background: #0b5ed7;
+
             color: white;
         }
 
         .btn-primary:hover {
+
             background: #084db2;
+
+            transform: translateY(-2px);
         }
 
         .btn-secondary {
-            border: 1px solid #cdd5e1;
+
             background: white;
+
+            border: 1px solid #ccd5e2;
+
+            color: #26344b;
         }
 
         .btn-secondary:hover {
+
             border-color: #0b5ed7;
+
             color: #0b5ed7;
+
+            transform: translateY(-2px);
         }
 
-        /* GENERAL */
+
+        /* ================================
+           SECTION
+        ================================= */
 
         section {
-            padding: 90px 25px;
-        }
 
-        .container {
-            max-width: 1150px;
-            margin: auto;
+            padding: 95px 25px;
         }
 
         .section-label {
+
             color: #0b5ed7;
+
             font-size: 13px;
-            font-weight: 700;
+
+            font-weight: 800;
+
             text-transform: uppercase;
+
             letter-spacing: 2px;
-            margin-bottom: 10px;
+
+            margin-bottom: 9px;
         }
 
         .section-title {
-            font-size: 38px;
+
+            font-size: 40px;
+
+            line-height: 1.15;
+
             margin-bottom: 15px;
         }
 
         .section-description {
-            color: #687286;
-            max-width: 720px;
+
+            color: #697386;
+
+            max-width: 750px;
+
             margin-bottom: 45px;
         }
 
-        /* RESEARCH AREAS */
+
+        /* ================================
+           RESEARCH AREAS
+        ================================= */
 
         .research-grid {
+
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
             gap: 20px;
         }
 
         .research-card {
+
             background: white;
+
             padding: 30px;
-            border-radius: 14px;
-            border: 1px solid #e5e9f0;
-            transition: 0.3s;
+
+            border-radius: 16px;
+
+            border: 1px solid #e3e8f0;
+
+            transition: 0.25s;
         }
 
         .research-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(20,40,80,0.08);
+
+            transform: translateY(-6px);
+
+            box-shadow:
+                0 18px 40px
+                rgba(20,40,80,0.08);
         }
 
         .research-icon {
-            font-size: 30px;
-            margin-bottom: 18px;
+
+            font-size: 32px;
+
+            margin-bottom: 17px;
         }
 
         .research-card h3 {
+
+            font-size: 19px;
+
             margin-bottom: 10px;
         }
 
         .research-card p {
-            color: #687286;
+
             font-size: 14px;
+
+            color: #697386;
         }
 
-        /* HIGHLIGHTS */
+
+        /* ================================
+           RESEARCH HIGHLIGHTS
+        ================================= */
 
         #highlights {
-            background: #0e1728;
+
+            background: #0d1729;
+
             color: white;
         }
 
         #highlights .section-description {
+
             color: #aeb9ca;
         }
 
         .highlight-grid {
+
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
             gap: 22px;
         }
 
         .highlight-card {
+
             background: #172238;
-            border: 1px solid #293650;
-            border-radius: 16px;
-            padding: 30px;
-            transition: 0.3s;
+
+            border: 1px solid #2b3852;
+
+            padding: 32px;
+
+            border-radius: 17px;
+
+            transition: 0.25s;
         }
 
         .highlight-card:hover {
-            transform: translateY(-6px);
-            border-color: #5e9eff;
+
+            transform: translateY(-7px);
+
+            border-color: #6ca5ff;
+
+            box-shadow:
+                0 20px 45px
+                rgba(0,0,0,0.25);
         }
 
         .highlight-number {
-            color: #6da7ff;
-            font-size: 13px;
-            font-weight: bold;
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            letter-spacing: 1.5px;
+
+            color: #70aaff;
+
             margin-bottom: 15px;
         }
 
         .highlight-card h3 {
+
             font-size: 21px;
-            margin-bottom: 14px;
+
+            margin-bottom: 15px;
         }
 
         .highlight-card p {
+
             color: #b8c3d5;
+
             font-size: 14px;
+
             margin-bottom: 20px;
         }
 
+        .finding {
+
+            border-left: 3px solid #6ca5ff;
+
+            padding-left: 13px;
+
+            color: #e1e8f4;
+
+            font-size: 14px;
+
+            margin-bottom: 22px;
+        }
+
         .highlight-link {
-            color: #72aaff;
-            font-weight: 600;
+
+            color: #73aaff;
+
+            font-weight: 700;
+
             font-size: 14px;
         }
 
-        /* ABOUT */
+
+        /* ================================
+           ABOUT
+        ================================= */
 
         .about-grid {
+
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
+
+            grid-template-columns:
+                1.4fr 0.8fr;
+
+            gap: 65px;
+
             align-items: center;
         }
 
         .about-text p {
+
             color: #5f697b;
+
             margin-bottom: 18px;
         }
 
         .about-box {
+
             background: white;
+
             padding: 35px;
-            border-radius: 16px;
-            border: 1px solid #e5e9f0;
+
+            border-radius: 17px;
+
+            border: 1px solid #e3e8f0;
+
+            box-shadow:
+                0 12px 30px
+                rgba(20,40,80,0.05);
         }
 
-        .about-box strong {
+        .about-box h3 {
+
+            margin-bottom: 15px;
+        }
+
+        .about-box p {
+
+            color: #687286;
+
+            font-size: 14px;
+
+            margin-bottom: 12px;
+        }
+
+        .stat {
+
+            padding: 16px 0;
+
+            border-bottom:
+                1px solid #e6eaf0;
+        }
+
+        .stat:last-child {
+
+            border-bottom: none;
+        }
+
+        .stat strong {
+
+            display: block;
+
+            font-size: 24px;
+
             color: #0b5ed7;
         }
 
-        /* PUBLICATIONS */
+        .stat span {
 
-        .publication-card {
-            background: white;
-            padding: 28px;
-            border-radius: 14px;
-            border: 1px solid #e5e9f0;
-            margin-bottom: 18px;
-        }
+            color: #687286;
 
-        .publication-year {
-            color: #0b5ed7;
-            font-weight: bold;
             font-size: 13px;
         }
 
+
+        /* ================================
+           PUBLICATIONS
+        ================================= */
+
+        #publications {
+
+            background: #f7f9fc;
+        }
+
+        .publication-tools {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 20px;
+
+            margin-bottom: 30px;
+
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+
+            width: 100%;
+
+            max-width: 500px;
+
+            padding: 13px 17px;
+
+            border: 1px solid #d6dde8;
+
+            border-radius: 9px;
+
+            background: white;
+
+            font-size: 14px;
+
+            outline: none;
+        }
+
+        .search-box:focus {
+
+            border-color: #0b5ed7;
+        }
+
+        .publication-count {
+
+            color: #697386;
+
+            font-size: 14px;
+        }
+
+        .publication-card {
+
+            display: block;
+
+            background: white;
+
+            padding: 30px;
+
+            border-radius: 16px;
+
+            border: 1px solid #e3e8f0;
+
+            margin-bottom: 18px;
+
+            transition: 0.25s;
+
+            cursor: pointer;
+        }
+
+        .publication-card:hover {
+
+            transform: translateY(-4px);
+
+            border-color: #0b5ed7;
+
+            box-shadow:
+                0 15px 35px
+                rgba(20,40,80,0.09);
+        }
+
+        .publication-year {
+
+            display: inline-block;
+
+            color: #0b5ed7;
+
+            background: #edf5ff;
+
+            padding: 4px 9px;
+
+            border-radius: 5px;
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            margin-bottom: 10px;
+        }
+
         .publication-card h3 {
-            margin: 7px 0 10px;
+
             font-size: 19px;
+
+            line-height: 1.4;
+
+            margin-bottom: 10px;
+
+            color: #172033;
         }
 
         .publication-card p {
+
             color: #687286;
+
+            font-size: 14px;
+
+            margin-bottom: 7px;
+        }
+
+        .publication-journal {
+
+            color: #4e5a6e;
+
+            font-size: 14px;
+
+            font-style: italic;
+
+            margin-top: 7px;
+        }
+
+        .publication-link {
+
+            display: inline-block;
+
+            margin-top: 17px;
+
+            color: #0b5ed7;
+
+            font-weight: 800;
+
             font-size: 14px;
         }
 
-        /* SKILLS */
+
+        /* ================================
+           BOOK CHAPTERS
+        ================================= */
+
+        .book-section {
+
+            margin-top: 80px;
+        }
+
+
+        /* ================================
+           PROJECTS
+        ================================= */
+
+        .project-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 22px;
+        }
+
+        .project-card {
+
+            background: white;
+
+            padding: 30px;
+
+            border-radius: 16px;
+
+            border: 1px solid #e3e8f0;
+
+            transition: 0.25s;
+        }
+
+        .project-card:hover {
+
+            transform: translateY(-5px);
+
+            box-shadow:
+                0 16px 35px
+                rgba(20,40,80,0.08);
+        }
+
+        .project-card h3 {
+
+            margin-bottom: 12px;
+        }
+
+        .project-card p {
+
+            color: #687286;
+
+            font-size: 14px;
+        }
+
+        .project-tag {
+
+            display: inline-block;
+
+            margin-top: 18px;
+
+            padding: 5px 10px;
+
+            background: #edf5ff;
+
+            color: #0b5ed7;
+
+            border-radius: 5px;
+
+            font-size: 12px;
+
+            font-weight: 700;
+        }
+
+
+        /* ================================
+           SKILLS
+        ================================= */
 
         .skills {
+
             display: flex;
+
             flex-wrap: wrap;
-            gap: 12px;
+
+            gap: 11px;
         }
 
         .skill {
+
             background: white;
-            border: 1px solid #dce2eb;
+
+            border: 1px solid #dce3ed;
+
             padding: 10px 15px;
+
             border-radius: 30px;
+
             font-size: 14px;
+
+            transition: 0.2s;
         }
 
-        /* CONTACT */
+        .skill:hover {
+
+            border-color: #0b5ed7;
+
+            color: #0b5ed7;
+        }
+
+
+        /* ================================
+           CV
+        ================================= */
+
+        .cv-box {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #0d1729,
+                    #162640
+                );
+
+            color: white;
+
+            border-radius: 20px;
+
+            padding: 55px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 30px;
+        }
+
+        .cv-box p {
+
+            color: #b9c5d7;
+
+            max-width: 650px;
+
+            margin-top: 10px;
+        }
+
+        .cv-button {
+
+            background: white;
+
+            color: #0b5ed7;
+
+            padding: 13px 22px;
+
+            border-radius: 8px;
+
+            font-weight: 800;
+
+            white-space: nowrap;
+        }
+
+
+        /* ================================
+           CONTACT
+        ================================= */
 
         #contact {
+
             background: #eef4fb;
         }
 
         .contact-box {
+
             background: white;
-            border-radius: 18px;
-            padding: 45px;
+
+            border-radius: 20px;
+
+            padding: 55px;
+
             text-align: center;
+
             border: 1px solid #dce4ef;
         }
 
         .contact-box p {
+
             color: #687286;
-            margin: 15px auto 25px;
-            max-width: 650px;
+
+            max-width: 700px;
+
+            margin: 15px auto 28px;
         }
 
-        /* FOOTER */
+        .contact-links {
+
+            display: flex;
+
+            justify-content: center;
+
+            gap: 13px;
+
+            flex-wrap: wrap;
+        }
+
+
+        /* ================================
+           FOOTER
+        ================================= */
 
         footer {
-            background: #0e1728;
+
+            background: #0d1729;
+
             color: #aeb9ca;
+
             text-align: center;
-            padding: 30px 20px;
+
+            padding: 35px 20px;
+
             font-size: 13px;
         }
 
-        /* MOBILE */
+        footer a {
 
-        @media (max-width: 900px) {
+            color: #73aaff;
+        }
+
+
+        /* ================================
+           MOBILE
+        ================================= */
+
+        @media(max-width: 950px) {
 
             .research-grid {
-                grid-template-columns: repeat(2, 1fr);
+
+                grid-template-columns:
+                    repeat(2, 1fr);
             }
 
             .highlight-grid {
+
                 grid-template-columns: 1fr;
             }
 
+            .project-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
             .about-grid {
+
                 grid-template-columns: 1fr;
             }
 
             .nav-links {
+
                 display: none;
             }
         }
 
-        @media (max-width: 600px) {
+
+        @media(max-width: 650px) {
 
             section {
-                padding: 65px 20px;
+
+                padding: 70px 20px;
             }
 
-            .research-grid {
-                grid-template-columns: 1fr;
-            }
+            .hero-container {
 
-            .hero {
-                min-height: 80vh;
+                padding: 75px 20px;
             }
 
             .hero h1 {
-                font-size: 43px;
+
+                font-size: 44px;
+
+                letter-spacing: -2px;
             }
 
-            .hero p {
+            .hero-description {
+
                 font-size: 17px;
             }
+
+            .research-grid {
+
+                grid-template-columns: 1fr;
+            }
+
+            .project-grid {
+
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+
+                font-size: 32px;
+            }
+
+            .cv-box {
+
+                padding: 35px;
+
+                flex-direction: column;
+
+                align-items: flex-start;
+            }
+
+            .contact-box {
+
+                padding: 35px 25px;
+            }
+
+            .publication-card {
+
+                padding: 23px;
+            }
         }
+
     </style>
+
 </head>
+
 
 <body>
 
-<!-- NAVIGATION -->
+
+<!-- ======================================
+     NAVIGATION
+======================================= -->
 
 <nav>
+
     <div class="nav-container">
 
-        <a href="#" class="logo">SSM Alam</a>
+        <a href="#" class="logo">
+            SSM Alam
+        </a>
 
         <ul class="nav-links">
-            <li><a href="#about">About</a></li>
-            <li><a href="#research">Research</a></li>
-            <li><a href="#highlights">Highlights</a></li>
-            <li><a href="#publications">Publications</a></li>
-            <li><a href="#skills">Skills</a></li>
-            <li><a href="#contact">Contact</a></li>
+
+            <li>
+                <a href="#about">About</a>
+            </li>
+
+            <li>
+                <a href="#research">Research</a>
+            </li>
+
+            <li>
+                <a href="#highlights">Highlights</a>
+            </li>
+
+            <li>
+                <a href="#publications">Publications</a>
+            </li>
+
+            <li>
+                <a href="#projects">Projects</a>
+            </li>
+
+            <li>
+                <a href="#skills">Skills</a>
+            </li>
+
+            <li>
+                <a href="#contact">Contact</a>
+            </li>
+
         </ul>
 
     </div>
+
 </nav>
 
 
-<!-- HERO -->
+
+<!-- ======================================
+     HERO
+======================================= -->
 
 <header class="hero">
 
@@ -444,32 +1109,56 @@
         <div class="hero-content">
 
             <div class="tag">
+
                 Researcher · Computational Biology · Bioinformatics
+
             </div>
 
+
             <h1>
+
                 Syed Sahajada<br>
+
                 <span>Mahafujul Alam</span>
+
             </h1>
 
-            <p>
-                Computational biology researcher working at the intersection
-                of cancer immunotherapy, molecular drug discovery,
+
+            <p class="hero-description">
+
+                Biological sciences researcher working at the intersection
+                of cancer immunotherapy, computational drug discovery,
                 bioinformatics, genomics and host–pathogen interactions.
+
             </p>
+
 
             <div class="buttons">
 
-                <a href="#research" class="btn btn-primary">
+                <a
+                    href="#research"
+                    class="btn btn-primary">
+
                     Explore Research
+
                 </a>
 
-                <a href="#publications" class="btn btn-secondary">
+
+                <a
+                    href="#publications"
+                    class="btn btn-secondary">
+
                     View Publications
+
                 </a>
 
-                <a href="#contact" class="btn btn-secondary">
+
+                <a
+                    href="#contact"
+                    class="btn btn-secondary">
+
                     Contact Me
+
                 </a>
 
             </div>
@@ -481,7 +1170,10 @@
 </header>
 
 
-<!-- RESEARCH AREAS -->
+
+<!-- ======================================
+     RESEARCH AREAS
+======================================= -->
 
 <section id="research">
 
@@ -491,28 +1183,40 @@
             Research
         </div>
 
+
         <h2 class="section-title">
             Research Areas
         </h2>
 
+
         <p class="section-description">
-            My research combines computational and biological approaches
-            to investigate disease mechanisms and identify potential
-            therapeutic strategies.
+
+            My research integrates computational and experimental
+            approaches to investigate molecular mechanisms,
+            disease biology and potential therapeutic strategies.
+
         </p>
 
 
         <div class="research-grid">
 
+
             <div class="research-card">
 
-                <div class="research-icon">🧬</div>
+                <div class="research-icon">
+                    🧬
+                </div>
 
-                <h3>Cancer Immunotherapy</h3>
+                <h3>
+                    Cancer Immunotherapy
+                </h3>
 
                 <p>
+
                     PD-1/PD-L1 immune checkpoint biology,
-                    cancer immunotherapy and therapeutic discovery.
+                    cancer vaccines, immune checkpoint inhibitors
+                    and therapeutic discovery.
+
                 </p>
 
             </div>
@@ -520,13 +1224,21 @@
 
             <div class="research-card">
 
-                <div class="research-icon">💊</div>
+                <div class="research-icon">
+                    💊
+                </div>
 
-                <h3>Drug Discovery</h3>
+                <h3>
+                    Computational Drug Discovery
+                </h3>
 
                 <p>
+
                     Virtual screening, molecular docking,
-                    molecular dynamics and structure-guided discovery.
+                    molecular dynamics simulations,
+                    structure-guided drug discovery and
+                    computational pharmacology.
+
                 </p>
 
             </div>
@@ -534,13 +1246,20 @@
 
             <div class="research-card">
 
-                <div class="research-icon">🦠</div>
+                <div class="research-icon">
+                    🦠
+                </div>
 
-                <h3>Host–Pathogen Biology</h3>
+                <h3>
+                    Host–Pathogen Biology
+                </h3>
 
                 <p>
-                    Molecular interactions between pathogens
-                    and host proteins and cells.
+
+                    Molecular interactions between bacterial
+                    or viral proteins and host receptors,
+                    including host–pathogen interaction studies.
+
                 </p>
 
             </div>
@@ -548,16 +1267,24 @@
 
             <div class="research-card">
 
-                <div class="research-icon">🔬</div>
+                <div class="research-icon">
+                    🔬
+                </div>
 
-                <h3>Genomics & Bioinformatics</h3>
+                <h3>
+                    Genomics & Bioinformatics
+                </h3>
 
                 <p>
-                    NGS, genomics, transcriptomics, sequence analysis
-                    and computational biology.
+
+                    NGS, whole-genome sequencing,
+                    transcriptomics, sequence analysis,
+                    SNP analysis and computational biology.
+
                 </p>
 
             </div>
+
 
         </div>
 
@@ -566,7 +1293,10 @@
 </section>
 
 
-<!-- RESEARCH HIGHLIGHTS -->
+
+<!-- ======================================
+     RESEARCH HIGHLIGHTS
+======================================= -->
 
 <section id="highlights">
 
@@ -576,12 +1306,17 @@
             Featured Research
         </div>
 
+
         <h2 class="section-title">
             Research Highlights
         </h2>
 
+
         <p class="section-description">
-            Selected studies and key findings from my research.
+
+            Selected studies highlighting major research questions,
+            computational approaches and key findings.
+
         </p>
 
 
@@ -596,21 +1331,41 @@
                     RESEARCH HIGHLIGHT 01
                 </div>
 
+
                 <h3>
-                    PD-L1 Small-Molecule Inhibitor Discovery
+                    PD-L1 Phytochemical Inhibitor Discovery
                 </h3>
 
+
                 <p>
-                    Structure-guided virtual screening, molecular docking
-                    and molecular dynamics were used to investigate
-                    phytochemical inhibitors targeting PD-L1.
+
+                    Structure-guided computational screening was used
+                    to investigate naturally derived compounds capable
+                    of targeting the PD-L1 immune checkpoint.
+
                 </p>
 
-                <a href="#publications" class="highlight-link">
-                    View study →
+
+                <div class="finding">
+
+                    Key finding: Hydnocarpin and calomelanol G were
+                    identified as promising candidate compounds based
+                    on virtual screening, docking and molecular
+                    dynamics analyses.
+
+                </div>
+
+
+                <a
+                    href="#publications"
+                    class="highlight-link">
+
+                    View publication →
+
                 </a>
 
             </div>
+
 
 
             <!-- HIGHLIGHT 2 -->
@@ -621,21 +1376,40 @@
                     RESEARCH HIGHLIGHT 02
                 </div>
 
+
                 <h3>
-                    PD-1 Inhibitor Discovery
+                    PD-1 Peptide & Small-Molecule Discovery
                 </h3>
 
+
                 <p>
-                    An integrated high-throughput virtual screening and
-                    molecular dynamics strategy was used to identify
-                    potential small-molecule PD-1 inhibitors.
+
+                    Computational strategies were developed to
+                    identify potential inhibitors targeting the
+                    PD-1 immune checkpoint.
+
                 </p>
 
-                <a href="#publications" class="highlight-link">
-                    View study →
+
+                <div class="finding">
+
+                    Key finding: Integrated virtual screening,
+                    molecular docking and molecular dynamics approaches
+                    identified promising PD-1 inhibitor candidates.
+
+                </div>
+
+
+                <a
+                    href="#publications"
+                    class="highlight-link">
+
+                    View publications →
+
                 </a>
 
             </div>
+
 
 
             <!-- HIGHLIGHT 3 -->
@@ -646,18 +1420,168 @@
                     RESEARCH HIGHLIGHT 03
                 </div>
 
+
+                <h3>
+                    PD-L1 Genetic Variations
+                </h3>
+
+
+                <p>
+
+                    Computational analysis was used to investigate
+                    the effects of non-synonymous mutations in the
+                    CD274 gene encoding PD-L1.
+
+                </p>
+
+
+                <div class="finding">
+
+                    Key finding: Multiple potentially deleterious
+                    variants were identified, with C40R and V104L
+                    showing notable effects on PD-1 interaction.
+
+                </div>
+
+
+                <a
+                    href="#publications"
+                    class="highlight-link">
+
+                    View publication →
+
+                </a>
+
+            </div>
+
+
+
+            <!-- HIGHLIGHT 4 -->
+
+            <div class="highlight-card">
+
+                <div class="highlight-number">
+                    RESEARCH HIGHLIGHT 04
+                </div>
+
+
                 <h3>
                     JlpA–Hsp90α Interaction
                 </h3>
 
+
                 <p>
-                    Functional characterization of JlpA identified
-                    a C-terminal region important for Hsp90α binding
-                    and Campylobacter host-cell adhesion.
+
+                    Functional characterization of the Campylobacter
+                    jejuni surface protein JlpA was performed to
+                    investigate its interaction with human Hsp90α.
+
                 </p>
 
-                <a href="#publications" class="highlight-link">
-                    View study →
+
+                <div class="finding">
+
+                    Key finding: The Q332–A354 region of JlpA showed
+                    greater importance for Hsp90α binding and
+                    host-cell adhesion.
+
+                </div>
+
+
+                <a
+                    href="#publications"
+                    class="highlight-link">
+
+                    View publication →
+
+                </a>
+
+            </div>
+
+
+
+            <!-- HIGHLIGHT 5 -->
+
+            <div class="highlight-card">
+
+                <div class="highlight-number">
+                    RESEARCH HIGHLIGHT 05
+                </div>
+
+
+                <h3>
+                    SARS-CoV-2 & ACE2 Interaction
+                </h3>
+
+
+                <p>
+
+                    Protein–protein interaction approaches were used
+                    to investigate interactions between SARS-CoV-2
+                    spike RBDs and ACE2 receptors.
+
+                </p>
+
+
+                <div class="finding">
+
+                    Key finding: Different mutations and variants
+                    were associated with altered interaction patterns
+                    between viral RBD and host ACE2.
+
+                </div>
+
+
+                <a
+                    href="#publications"
+                    class="highlight-link">
+
+                    View publications →
+
+                </a>
+
+            </div>
+
+
+
+            <!-- HIGHLIGHT 6 -->
+
+            <div class="highlight-card">
+
+                <div class="highlight-number">
+                    RESEARCH HIGHLIGHT 06
+                </div>
+
+
+                <h3>
+                    EGCG Pharmacological Network
+                </h3>
+
+
+                <p>
+
+                    Network pharmacology, pathway analysis,
+                    molecular docking and molecular dynamics were
+                    integrated to investigate EGCG-associated targets.
+
+                </p>
+
+
+                <div class="finding">
+
+                    Key finding: HSP90AA1 emerged as a prominent
+                    common molecular target in the computational
+                    analysis.
+
+                </div>
+
+
+                <a
+                    href="#publications"
+                    class="highlight-link">
+
+                    View publication →
+
                 </a>
 
             </div>
@@ -670,7 +1594,10 @@
 </section>
 
 
-<!-- ABOUT -->
+
+<!-- ======================================
+     ABOUT
+======================================= -->
 
 <section id="about">
 
@@ -678,51 +1605,112 @@
 
         <div class="about-grid">
 
+
             <div class="about-text">
 
                 <div class="section-label">
                     About Me
                 </div>
 
+
                 <h2 class="section-title">
                     Research-driven biology
                 </h2>
 
-                <p>
-                    I am a biological sciences researcher with interests
-                    spanning computational biology, cancer immunotherapy,
-                    molecular drug discovery and bioinformatics.
-                </p>
 
                 <p>
-                    My work integrates computational modelling,
+
+                    I am a biological sciences researcher with
+                    research interests spanning computational biology,
+                    cancer immunotherapy, molecular drug discovery,
+                    genomics and host–pathogen interactions.
+
+                </p>
+
+
+                <p>
+
+                    My research integrates computational modelling,
                     molecular docking, molecular dynamics simulations,
-                    genomics and biological experimentation to investigate
-                    molecular mechanisms and potential therapeutic targets.
+                    bioinformatics, genomics and biological
+                    experimentation to investigate molecular
+                    mechanisms and therapeutic possibilities.
+
                 </p>
 
+
                 <p>
-                    I am particularly interested in translating
-                    computational discoveries into experimentally
+
+                    I am particularly interested in combining
+                    computational predictions with experimentally
                     testable biological hypotheses.
+
                 </p>
 
             </div>
+
 
 
             <div class="about-box">
 
-                <p>
-                    <strong>Research philosophy</strong>
-                </p>
+                <h3>
+                    Research Profile
+                </h3>
 
-                <p>
-                    Combining computational prediction with experimental
-                    validation to understand biological systems and
-                    develop potential therapeutic strategies.
-                </p>
+
+                <div class="stat">
+
+                    <strong>
+                        16+
+                    </strong>
+
+                    <span>
+                        Research Publications
+                    </span>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <strong>
+                        6
+                    </strong>
+
+                    <span>
+                        Book Chapters
+                    </span>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <strong>
+                        4+
+                    </strong>
+
+                    <span>
+                        Major Research Areas
+                    </span>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <strong>
+                        Computational + Experimental
+                    </strong>
+
+                    <span>
+                        Integrated research approach
+                    </span>
+
+                </div>
 
             </div>
+
 
         </div>
 
@@ -731,121 +1719,1112 @@
 </section>
 
 
-<!-- PUBLICATIONS -->
+
+<!-- ======================================
+     PUBLICATIONS
+======================================= -->
 
 <section id="publications">
 
     <div class="container">
 
+
         <div class="section-label">
             Publications
         </div>
 
+
         <h2 class="section-title">
-            Selected Publications
+            Research Publications
         </h2>
 
+
         <p class="section-description">
-            Selected research contributions spanning cancer,
-            computational biology, infectious disease and genomics.
+
+            Peer-reviewed research contributions spanning cancer
+            immunotherapy, computational drug discovery,
+            genomics, infectious disease and molecular biology.
+
         </p>
 
 
-        <div class="publication-card">
+        <div class="publication-tools">
 
-            <div class="publication-year">
-                2026
+            <input
+                type="text"
+                id="publicationSearch"
+                class="search-box"
+                placeholder="Search publications by title, journal or year...">
+
+
+            <div class="publication-count">
+
+                <span id="paperCount">
+                    16
+                </span>
+                research papers
+
             </div>
-
-            <h3>
-                Structure-Guided Identification of Phytochemical
-                Inhibitors Targeting Programmed Death Ligand-1 Protein
-                for Cancer Immunotherapy
-            </h3>
-
-            <p>
-                Syed Sahajada Mahafujul Alam, Showkat Ahmad Mir,
-                Arijit Samanta, Safdar Ali and Mehboob Hoque.
-            </p>
 
         </div>
 
 
-        <div class="publication-card">
 
-            <div class="publication-year">
-                2026
-            </div>
+        <div id="publicationList">
 
-            <h3>
-                Integrated High-Throughput Virtual Screening and
-                Molecular Dynamics Approach to Identify Potential
-                PD-1 Inhibitors for Cancer Immunotherapy
-            </h3>
 
-            <p>
-                Arijit Samanta, Syed Sahajada Mahafujul Alam,
-                Safdar Ali and Mehboob Hoque.
-            </p>
+            <!-- 1 -->
+
+            <a
+                class="publication-card"
+                href="https://doi.org/10.1002/slct.202505365"
+                target="_blank"
+                rel="noopener noreferrer">
+
+                <div class="publication-year">
+                    2026
+                </div>
+
+
+                <h3>
+
+                    Structure-Guided Identification of Phytochemical
+                    Inhibitors Targeting Programmed Death Ligand-1
+                    Protein for Cancer Immunotherapy
+
+                </h3>
+
+
+                <p>
+
+                    Alam, S. S. M., Mir, S. A., Samanta, A.,
+                    Ali, S., & Hoque, M.
+
+                </p>
+
+
+                <div class="publication-journal">
+
+                    ChemistrySelect, 11(1)
+
+                </div>
+
+
+                <span class="publication-link">
+
+                    DOI / Publisher →
+
+                </span>
+
+            </a>
+
+
+
+            <!-- 2 -->
+
+            <a
+                class="publication-card"
+                href="https://doi.org/10.1016/j.ijbiomac.2026.150225"
+                target="_blank"
+                rel="noopener noreferrer">
+
+                <div class="publication-year">
+                    2026
+                </div>
+
+
+                <h3>
+
+                    Rational design of peptide-based programmed cell
+                    death 1 immune checkpoint inhibitors using advanced
+                    integrated computational approach
+
+                </h3>
+
+
+                <p>
+
+                    Samanta, A., Alam, S. S. M., Ali, S., & Hoque, M.
+
+                </p>
+
+
+                <div class="publication-journal">
+
+                    International Journal of Biological Macromolecules,
+                    150225
+
+                </div>
+
+
+                <span class="publication-link">
+
+                    DOI / Publisher →
+
+                </span>
+
+            </a>
+
+
+
+            <!-- 3 -->
+
+            <a
+                class="publication-card"
+                href="https://doi.org/10.1038/s41598-025-87063-y"
+                target="_blank"
+                rel="noopener noreferrer">
+
+                <div class="publication-year">
+                    2025
+                </div>
+
+
+                <h3>
+
+                    Immunoinformatics based designing of a
+                    multi-epitope cancer vaccine targeting
+                    programmed cell death ligand 1
+
+                </h3>
+
+
+                <p>
+
+                    Alam, S. S. M., Mir, S. A., Samanta, A.,
+                    Nayak, B., Ali, S., & Hoque, M.
+
+                </p>
+
+
+                <div class="publication-journal">
+
+                    Scientific Reports, 15(1)
+
+                </div>
+
+
+                <span class="publication-link">
+
+                    DOI / Publisher →
+
+                </span>
+
+            </a>
+
+
+
+            <!-- 4 -->
+
+            <a
+                class="publication-card"
+                href="https://doi.org/10.1016/j.bbrc.2025.152679"
+                target="_blank"
+                rel="noopener noreferrer">
+
+                <div class="publication-year">
+                    2025
+                </div>
+
+
+                <h3>
+
+                    Structural insights into the impacts of
+                    non-synonymous single nucleotide polymorphisms
+                    in CD274 gene on the PD-1/PD-L1 interaction:
+                    An in silico approach
+
+                </h3>
+
+
+                <p>
+
+                    Alam, S. S. M., Samanta, A., Ali, S.,
+                    & Hoque, M.
+
+                </p>
+
+
+                <div class="publication-journal">
+
+                    Biochemical and Biophysical Research Communications,
+                    152679
+
+                </div>
+
+
+                <span class="publication-link">
+
+                    DOI / Publisher →
+
+                </span>
+
+            </a>
+
+
+
+            <!-- 5 -->
+
+            <a
+                class="publication-card"
+                href="https://doi.org/10.1142/s2737416526500304"
+                target="_blank"
+                rel="noopener noreferrer">
+
+                <div class="publication-year">
+                    2025
+                </div>
+
+
+                <h3>
+
+                    Mapping pharmacological network to identify
+                    common molecular targets of epigallocatechin-3-gallate
+                    (EGCG) in inflammation and cancer
+
+                </h3>
+
+
+                <p>
+
+                    Alam, S. S. M., Mondal, R. H., Samanta, A.,
+                    Mir, S. A., Nayak, B., Ali, S., & Hoque, M.
+
+                </p>
+
+
+                <div class="publication-journal">
+
+                    Journal of Computational Biophysics and Chemistry,
+                    1–16
+
+                </div>
+
+
+                <span class="publication-link">
+
+                    DOI / Publisher →
+
+                </span>
+
+            </a>
+
+
+
+            <!-- 6 -->
+
+            <a
+                class="publication-card"
+                href="https://doi.org/10.1186/s43042-025-00775-8"
+                target="_blank"
+                rel="noopener noreferrer">
+
+                <div class="publication-year">
+                    2025
+                </div>
+
+
+                <h3>
+
+                    Damaging non-synonymous mutations in the
+                    extracellular domain of HER2 potentially alter
+                    the efficacy of Herceptin-mediated breast cancer therapy
+
+                </h3>
+
+
+                <p>
+
+                    Samanta, A., Karim, A., Ahamed, A., Hassan, M. K.,
+                    Alam, S. S. M., Ali, S., & Hoque, M.
+
+                </p>
+
+
+                <div class="publication-journal">
+
+                    Egyptian Journal of Medical Human Genetics,
+                    26(1)
+
+                </div>
+
+
+                <span class="publication-link">
+
+                    DOI / Publisher →
+
+                </span>
+
+            </a>
+
+
+
+            <!-- 7 -->
+
+            <a
+                class="publication-card"
+                href="https://doi.org/10.1016/j.ijbiomac.2024.130388"
+                target="_blank"
+                rel="noopener noreferrer">
+
+                <div class="publication-year">
+                    2024
+                </div>
+
+
+                <h3>
+
+                    Identification and functional characterization
+                    of putative ligand binding domain(s) of JlpA
+                    protein of Campylobacter jejuni
+
+                </h3>
+
+
+                <p>
+
+                    Gorain, C., Gupta, S., Alam, S. S. M.,
+                    Hoque, M., Karlyshev, A. V., & Mallick, A. I.
+
+                </p>
+
+
+                <div class="publication-journal">
+
+                    International Journal of Biological Macromolecules,
+                    264, 130388
+
+                </div>
+
+
+                <span class="publication-link">
+
+                    DOI / Publisher →
+
+                </span>
+
+            </a>
+
+
+
+            <!-- 8 -->
+
+            <a
+                class="publication-card"
+                href="https://doi.org/10.1002/jcb.30515"
+                target="_blank"
+                rel="noopener noreferrer">
+
+                <div class="publication-year">
+                    2024
+                </div>
+
+
+                <h3>
+
+                    Nonsynonymous mutations in VEGF receptor binding
+                    domain alter the efficacy of bevacizumab treatment
+
+                </h3>
+
+
+                <p>
+
+                    Ahamed, A., Samanta, A., Alam, S. S. M.,
+                    Mir, S. A., Jamil, Z., Ali, S., & Hoque, M.
+
+                </p>
+
+
+                <div class="publication-journal">
+
+                    Journal of Cellular Biochemistry, 125(2)
+
+                </div>
+
+
+                <span class="publication-link">
+
+                    DOI / Publisher →
+
+                </span>
+
+            </a>
+
+
+
+            <!-- 9 -->
+
+            <a
+                class="publication-card"
+                href="https://doi.org/10.2174/0113816128275739231106055502"
+                target="_blank"
+                rel="noopener noreferrer">
+
+                <div class="publication-year">
+                    2023
+                </div>
+
+
+                <h3>
+
+                    Non-synonymous single nucleotide polymorphisms
+                    in human ACE2 gene may affect the infectivity
+                    of SARS-COV-2 Omicron subvariants
+
+                </h3>
+
+
+                <p>
+
+                    Samanta, A., Ahamed, A., Alam, S. S. M.,
+                    Ali, S., Khan, M. S., Al-Amri, A. M.,
+                    Tabrez, S., & Hoque, M.
+
+                </p>
+
+
+                <div class="publication-journal">
+
+                    Current Pharmaceutical Design,
+                    29(36), 2891–2901
+
+                </div>
+
+
+                <span class="publication-link">
+
+                    DOI / Publisher →
+
+                </span>
+
+            </a>
+
+
+
+            <!-- 10 -->
+
+            <a
+                class="publication-card"
+                href="https://doi.org/10.1016/j.genrep.2023.101861"
+                target="_blank"
+                rel="noopener noreferrer">
+
+                <div class="publication-year">
+                    2023
+                </div>
+
+
+                <h3>
+
+                    Codon usage patterns of the eleven SARS-CoV-2
+                    variants with reference to the Wuhan sequence
+
+                </h3>
+
+
+                <p>
+
+                    Hassan, M. S., Alam, S. S. M., Samanta, A.,
+                    Hoque, M., & Ali, S.
+
+                </p>
+
+
+                <div class="publication-journal">
+
+                    Gene Reports, 34, 101861
+
+                </div>
+
+
+                <span class="publication-link">
+
+                    DOI / Publisher →
+
+                </span>
+
+            </a>
+
+
+
+            <!-- 11 -->
+
+            <a
+                class="publication-card"
+                href="https://doi.org/10.1016/j.prmcm.2023.100308"
+                target="_blank"
+                rel="noopener noreferrer">
+
+                <div class="publication-year">
+                    2023
+                </div>
+
+
+                <h3>
+
+                    Prospective pharmacological potential of
+                    cryptotanshinone in cancer therapy
+
+                </h3>
+
+
+                <p>
+
+                    Ahamed, A., Hasan, M., Samanta, A.,
+                    Alam, S. S. M., Jamil, Z., Ali, S., & Hoque, M.
+
+                </p>
+
+
+                <div class="publication-journal">
+
+                    Pharmacological Research - Modern Chinese Medicine,
+                    9, 100308
+
+                </div>
+
+
+                <span class="publication-link">
+
+                    DOI / Publisher →
+
+                </span>
+
+            </a>
+
+
+
+            <!-- 12 -->
+
+            <a
+                class="publication-card"
+                href="https://doi.org/10.1007/s43440-023-00507-y"
+                target="_blank"
+                rel="noopener noreferrer">
+
+                <div class="publication-year">
+                    2023
+                </div>
+
+
+                <h3>
+
+                    Tanshinone IIA targeting cell signaling pathways:
+                    a plausible paradigm for cancer therapy
+
+                </h3>
+
+
+                <p>
+
+                    Alam, S. S. M., Samanta, A., Uddin, F.,
+                    Ali, S., & Hoque, M.
+
+                </p>
+
+
+                <div class="publication-journal">
+
+                    Pharmacological Reports, 75(4), 907–922
+
+                </div>
+
+
+                <span class="publication-link">
+
+                    DOI / Publisher →
+
+                </span>
+
+            </a>
+
+
+
+            <!-- 13 -->
+
+            <a
+                class="publication-card"
+                href="https://doi.org/10.1007/s10142-023-00962-z"
+                target="_blank"
+                rel="noopener noreferrer">
+
+                <div class="publication-year">
+                    2023
+                </div>
+
+
+                <h3>
+
+                    Evaluating the transmission feasibility of
+                    SARS-CoV-2 Omicron (B.1.1.529) variant to
+                    143 mammalian hosts: insights from S protein
+                    RBD and host ACE2 interaction studies
+
+                </h3>
+
+
+                <p>
+
+                    Samanta, A., Alam, S. S. M., Ali, S., & Hoque, M.
+
+                </p>
+
+
+                <div class="publication-journal">
+
+                    Functional & Integrative Genomics, 23(1)
+
+                </div>
+
+
+                <span class="publication-link">
+
+                    DOI / Publisher →
+
+                </span>
+
+            </a>
+
+
+
+            <!-- 14 -->
+
+            <a
+                class="publication-card"
+                href="https://doi.org/10.3390/cells11203203"
+                target="_blank"
+                rel="noopener noreferrer">
+
+                <div class="publication-year">
+                    2022
+                </div>
+
+
+                <h3>
+
+                    Analysis of the compositional features and
+                    Codon usage pattern of genes involved in
+                    human autophagy
+
+                </h3>
+
+
+                <p>
+
+                    Jamil, Z., Uddin, A., Alam, S. S. M.,
+                    Samanta, A., Altwaijry, N., Rauf, M. A.,
+                    Ali, S., Khan, M. S., Asghar, M. N., & Hoque, M.
+
+                </p>
+
+
+                <div class="publication-journal">
+
+                    Cells, 11(20), 3203
+
+                </div>
+
+
+                <span class="publication-link">
+
+                    DOI / Publisher →
+
+                </span>
+
+            </a>
+
+
+
+            <!-- 15 -->
+
+            <a
+                class="publication-card"
+                href="https://doi.org/10.17179/excli2022-4721"
+                target="_blank"
+                rel="noopener noreferrer">
+
+                <div class="publication-year">
+                    2022
+                </div>
+
+
+                <h3>
+
+                    Analyzing the interaction of human ACE2 and
+                    RBD of spike protein of SARS-CoV-2 in perspective
+                    of Omicron variant
+
+                </h3>
+
+
+                <p>
+
+                    Samanta, A., Alam, S. S. M., Ali, S., & Hoque, M.
+
+                </p>
+
+
+                <div class="publication-journal">
+
+                    EXCLI Journal, 21, 610–620
+
+                </div>
+
+
+                <span class="publication-link">
+
+                    DOI / Publisher →
+
+                </span>
+
+            </a>
+
+
+
+            <!-- 16 -->
+
+            <a
+                class="publication-card"
+                href="https://doi.org/10.1016/j.phyplu.2021.100202"
+                target="_blank"
+                rel="noopener noreferrer">
+
+                <div class="publication-year">
+                    2021
+                </div>
+
+
+                <h3>
+
+                    Therapeutic and pharmacological potential
+                    of Tanshinones against lung cancer:
+                    A systematic review
+
+                </h3>
+
+
+                <p>
+
+                    Alam, S. S. M., Uddin, F., Khan, F. B.,
+                    Kamal, M. A., & Hoque, M.
+
+                </p>
+
+
+                <div class="publication-journal">
+
+                    Phytomedicine Plus, 2(1), 100202
+
+                </div>
+
+
+                <span class="publication-link">
+
+                    DOI / Publisher →
+
+                </span>
+
+            </a>
+
 
         </div>
 
 
-        <div class="publication-card">
 
-            <div class="publication-year">
-                2024
+        <!-- ======================================
+             BOOK CHAPTERS
+        ======================================= -->
+
+        <div class="book-section">
+
+            <div class="section-label">
+                Book Chapters
             </div>
 
-            <h3>
-                Identification and functional characterization of
-                putative ligand binding domain(s) of JlpA protein
-                of Campylobacter jejuni
-            </h3>
 
-            <p>
-                Chandan Gorain, Subhadeep Gupta,
-                S.S. Mahafujul Alam and colleagues.
+            <h2 class="section-title">
+                Book Chapters
+            </h2>
+
+
+            <p class="section-description">
+
+                Contributions to edited volumes covering cancer
+                immunotherapy, systems biology, vaccinology,
+                genomics and nanomedicine.
+
             </p>
 
-        </div>
 
 
-        <div class="publication-card">
+            <!-- CHAPTER 1 -->
 
-            <div class="publication-year">
-                2024
-            </div>
+            <a
+                class="publication-card"
+                href="https://doi.org/10.1016/B978-0-443-22300-6.00051-6"
+                target="_blank"
+                rel="noopener noreferrer">
 
-            <h3>
-                Codon usage patterns of the eleven SARS-CoV-2 variants
-                with reference to the Wuhan sequence
-            </h3>
-
-            <p>
-                Md Samim Hassan, Syed Sahajada Mahafujul Alam,
-                Arijit Samanta and colleagues.
-            </p>
-
-        </div>
+                <div class="publication-year">
+                    2025
+                </div>
 
 
-        <div class="publication-card">
+                <h3>
 
-            <div class="publication-year">
-                Selected Research
-            </div>
+                    Recent advances and future prospects of
+                    adoptive cell-based cancer immunotherapy
 
-            <h3>
-                Structural insights into the impacts of
-                non-synonymous single nucleotide polymorphisms
-                in CD274 gene on the PD-1/PD-L1 interaction
-            </h3>
+                </h3>
 
-            <p>
-                Computational analysis of PD-L1 variants and
-                their potential effects on PD-1 interaction.
-            </p>
+
+                <p>
+
+                    Alam, S. S. M., Jamil, Z., Samanta, A.,
+                    Ali, S., & Hoque, M.
+
+                </p>
+
+
+                <div class="publication-journal">
+
+                    Elsevier eBooks, pp. 149–163
+
+                </div>
+
+
+                <span class="publication-link">
+
+                    DOI / Publisher →
+
+                </span>
+
+            </a>
+
+
+
+            <!-- CHAPTER 2 -->
+
+            <a
+                class="publication-card"
+                href="https://doi.org/10.1016/B978-0-443-22326-6.00018-3"
+                target="_blank"
+                rel="noopener noreferrer">
+
+                <div class="publication-year">
+                    2024
+                </div>
+
+
+                <h3>
+                    Systems vaccinology
+                </h3>
+
+
+                <p>
+
+                    Alam, S. S. M., Samanta, A., Jamil, Z.,
+                    Ahamed, A., Ali, S., & Hoque, M.
+
+                </p>
+
+
+                <div class="publication-journal">
+
+                    Elsevier eBooks, pp. 229–235
+
+                </div>
+
+
+                <span class="publication-link">
+
+                    DOI / Publisher →
+
+                </span>
+
+            </a>
+
+
+
+            <!-- CHAPTER 3 -->
+
+            <a
+                class="publication-card"
+                href="https://doi.org/10.1016/B978-0-443-22326-6.00023-7"
+                target="_blank"
+                rel="noopener noreferrer">
+
+                <div class="publication-year">
+                    2024
+                </div>
+
+
+                <h3>
+                    Systems biology of cancer
+                </h3>
+
+
+                <p>
+
+                    Jamil, Z., Ahamed, A., Samanta, A.,
+                    Alam, S. S. M., Ali, S., & Hoque, M.
+
+                </p>
+
+
+                <div class="publication-journal">
+
+                    Elsevier eBooks, pp. 295–304
+
+                </div>
+
+
+                <span class="publication-link">
+
+                    DOI / Publisher →
+
+                </span>
+
+            </a>
+
+
+
+            <!-- CHAPTER 4 -->
+
+            <a
+                class="publication-card"
+                href="https://doi.org/10.1016/B978-0-443-22326-6.00009-2"
+                target="_blank"
+                rel="noopener noreferrer">
+
+                <div class="publication-year">
+                    2024
+                </div>
+
+
+                <h3>
+
+                    High throughput data:
+                    Single-nucleotide polymorphisms in depth
+
+                </h3>
+
+
+                <p>
+
+                    Ahamed, A., Samanta, A., Alam, S. S. M.,
+                    Jamil, Z., Ali, S., & Hoque, M.
+
+                </p>
+
+
+                <div class="publication-journal">
+
+                    Elsevier eBooks, pp. 121–136
+
+                </div>
+
+
+                <span class="publication-link">
+
+                    DOI / Publisher →
+
+                </span>
+
+            </a>
+
+
+
+            <!-- CHAPTER 5 -->
+
+            <a
+                class="publication-card"
+                href="https://doi.org/10.1016/B978-0-443-18770-4.00017-2"
+                target="_blank"
+                rel="noopener noreferrer">
+
+                <div class="publication-year">
+                    2024
+                </div>
+
+
+                <h3>
+
+                    Liposome-based nanomedicines
+                    for cancer immunotherapy
+
+                </h3>
+
+
+                <p>
+
+                    Alam, S. S. M., Samanta, A., Sultana, Z.,
+                    Jamil, Z., Ali, S., & Hoque, M.
+
+                </p>
+
+
+                <div class="publication-journal">
+
+                    Elsevier eBooks, pp. 271–298
+
+                </div>
+
+
+                <span class="publication-link">
+
+                    DOI / Publisher →
+
+                </span>
+
+            </a>
+
+
+
+            <!-- CHAPTER 6 -->
+
+            <a
+                class="publication-card"
+                href="https://doi.org/10.1016/B978-0-443-18770-4.00015-9"
+                target="_blank"
+                rel="noopener noreferrer">
+
+                <div class="publication-year">
+                    2024
+                </div>
+
+
+                <h3>
+
+                    Current status, challenges, and future perspective
+                    of nanomedicine-based cancer immunotherapy
+
+                </h3>
+
+
+                <p>
+
+                    Sultana, Z., Jamil, Z., Samanta, A.,
+                    Alam, S. S. M., Ali, S., & Hoque, M.
+
+                </p>
+
+
+                <div class="publication-journal">
+
+                    Elsevier eBooks, pp. 495–516
+
+                </div>
+
+
+                <span class="publication-link">
+
+                    DOI / Publisher →
+
+                </span>
+
+            </a>
 
         </div>
 
@@ -854,7 +2833,173 @@
 </section>
 
 
-<!-- SKILLS -->
+
+<!-- ======================================
+     PROJECTS
+======================================= -->
+
+<section id="projects">
+
+    <div class="container">
+
+        <div class="section-label">
+            Projects
+        </div>
+
+
+        <h2 class="section-title">
+            Selected Research Projects
+        </h2>
+
+
+        <p class="section-description">
+
+            Research directions integrating computational,
+            bioinformatics and experimental approaches.
+
+        </p>
+
+
+        <div class="project-grid">
+
+
+            <div class="project-card">
+
+                <h3>
+                    PD-L1 Immunotherapy Discovery
+                </h3>
+
+                <p>
+
+                    Computational investigation of PD-L1 as a target
+                    for small-molecule inhibitors, phytochemicals
+                    and immunotherapeutic strategies.
+
+                </p>
+
+                <span class="project-tag">
+                    Cancer Immunotherapy
+                </span>
+
+            </div>
+
+
+            <div class="project-card">
+
+                <h3>
+                    PD-1 Inhibitor Discovery
+                </h3>
+
+                <p>
+
+                    Structure-guided screening and molecular
+                    simulation approaches for identifying potential
+                    PD-1 immune checkpoint inhibitors.
+
+                </p>
+
+                <span class="project-tag">
+                    Drug Discovery
+                </span>
+
+            </div>
+
+
+            <div class="project-card">
+
+                <h3>
+                    Molecular Host–Pathogen Interaction
+                </h3>
+
+                <p>
+
+                    Investigation of bacterial surface proteins
+                    and host receptors, including JlpA–Hsp90α
+                    interaction studies.
+
+                </p>
+
+                <span class="project-tag">
+                    Microbiology
+                </span>
+
+            </div>
+
+
+            <div class="project-card">
+
+                <h3>
+                    SARS-CoV-2 Computational Genomics
+                </h3>
+
+                <p>
+
+                    Analysis of viral mutations, ACE2 interaction,
+                    codon usage and potential host adaptation
+                    associated with SARS-CoV-2 variants.
+
+                </p>
+
+                <span class="project-tag">
+                    Viral Genomics
+                </span>
+
+            </div>
+
+
+            <div class="project-card">
+
+                <h3>
+                    Cancer-Associated nsSNP Analysis
+                </h3>
+
+                <p>
+
+                    Computational investigation of protein
+                    mutations and their potential effects on
+                    therapeutic interactions.
+
+                </p>
+
+                <span class="project-tag">
+                    Structural Bioinformatics
+                </span>
+
+            </div>
+
+
+            <div class="project-card">
+
+                <h3>
+                    Network Pharmacology
+                </h3>
+
+                <p>
+
+                    Integration of network pharmacology,
+                    pathway analysis, docking and molecular
+                    dynamics for therapeutic target discovery.
+
+                </p>
+
+                <span class="project-tag">
+                    Systems Biology
+                </span>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ======================================
+     SKILLS
+======================================= -->
 
 <section id="skills">
 
@@ -864,35 +3009,69 @@
             Expertise
         </div>
 
+
         <h2 class="section-title">
             Skills & Tools
         </h2>
 
+
         <p class="section-description">
-            Computational, bioinformatics and experimental skills.
+
+            Computational, bioinformatics, molecular biology
+            and data-analysis skills.
+
         </p>
 
 
         <div class="skills">
 
             <span class="skill">Python</span>
-            <span class="skill">Bioinformatics</span>
-            <span class="skill">NGS Analysis</span>
-            <span class="skill">WGS</span>
-            <span class="skill">RNA-seq</span>
-            <span class="skill">Molecular Docking</span>
-            <span class="skill">Molecular Dynamics</span>
-            <span class="skill">GROMACS</span>
-            <span class="skill">PyMOL</span>
-            <span class="skill">AutoDock</span>
-            <span class="skill">Linux</span>
-            <span class="skill">Machine Learning</span>
-            <span class="skill">RDKit</span>
+
             <span class="skill">R</span>
+
+            <span class="skill">Biopython</span>
+
+            <span class="skill">Bioinformatics</span>
+
             <span class="skill">Genomics</span>
+
+            <span class="skill">Whole-Genome Sequencing</span>
+
+            <span class="skill">RNA-seq</span>
+
+            <span class="skill">NGS Analysis</span>
+
+            <span class="skill">Molecular Docking</span>
+
+            <span class="skill">Molecular Dynamics</span>
+
+            <span class="skill">GROMACS</span>
+
+            <span class="skill">PyMOL</span>
+
+            <span class="skill">Chimera</span>
+
+            <span class="skill">AutoDock</span>
+
+            <span class="skill">RDKit</span>
+
+            <span class="skill">Machine Learning</span>
+
+            <span class="skill">Linux</span>
+
+            <span class="skill">Sequence Analysis</span>
+
+            <span class="skill">Protein Structure Analysis</span>
+
+            <span class="skill">Virtual Screening</span>
+
             <span class="skill">Molecular Biology</span>
+
             <span class="skill">Cell Culture</span>
+
             <span class="skill">Flow Cytometry</span>
+
+            <span class="skill">Scientific Writing</span>
 
         </div>
 
@@ -901,7 +3080,70 @@
 </section>
 
 
-<!-- CONTACT -->
+
+<!-- ======================================
+     CV
+======================================= -->
+
+<section id="cv">
+
+    <div class="container">
+
+        <div class="cv-box">
+
+            <div>
+
+                <div class="section-label">
+                    Curriculum Vitae
+                </div>
+
+
+                <h2>
+                    Interested in my research background?
+                </h2>
+
+
+                <p>
+
+                    Download my curriculum vitae for a complete
+                    overview of my education, research experience,
+                    publications, skills and academic activities.
+
+                </p>
+
+            </div>
+
+
+            <!--
+                IMPORTANT:
+                Later upload your CV to GitHub
+                with the filename:
+
+                CV.pdf
+
+                Then this button will work.
+            -->
+
+            <a
+                href="CV.pdf"
+                class="cv-button"
+                target="_blank">
+
+                Download CV →
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ======================================
+     CONTACT
+======================================= -->
 
 <section id="contact">
 
@@ -913,27 +3155,45 @@
                 Contact
             </div>
 
+
             <h2 class="section-title">
                 Let's connect
             </h2>
 
+
             <p>
+
                 I am interested in research collaborations,
-                scientific discussions and postdoctoral opportunities.
+                scientific discussions and opportunities
+                in computational biology, cancer immunotherapy,
+                bioinformatics and related fields.
+
             </p>
 
-            <div class="buttons" style="justify-content:center;">
 
-                <a href="mailto:ssmalam7@gmail.com"
-                   class="btn btn-primary">
+            <div class="contact-links">
+
+
+                <!-- CHANGE EMAIL LATER -->
+
+                <a
+                    href="mailto:YOUR_EMAIL@example.com"
+                    class="btn btn-primary">
+
                     Email Me
+
                 </a>
 
-                <a href="https://github.com/ssm-alam"
-                   target="_blank"
-                   class="btn btn-secondary">
+
+                <a
+                    href="https://github.com/ssm-alam"
+                    target="_blank"
+                    class="btn btn-secondary">
+
                     GitHub
+
                 </a>
+
 
             </div>
 
@@ -944,15 +3204,105 @@
 </section>
 
 
-<!-- FOOTER -->
+
+<!-- ======================================
+     FOOTER
+======================================= -->
 
 <footer>
 
-    © 2026 Syed Sahajada Mahafujul Alam.
-    All rights reserved.
+    <p>
+
+        © 2026 Syed Sahajada Mahafujul Alam.
+        All rights reserved.
+
+    </p>
+
+
+    <p style="margin-top:8px;">
+
+        Computational Biology · Cancer Immunotherapy · Bioinformatics
+
+    </p>
 
 </footer>
 
 
+
+<!-- ======================================
+     SEARCH SCRIPT
+======================================= -->
+
+<script>
+
+    const searchInput =
+        document.getElementById(
+            "publicationSearch"
+        );
+
+    const publications =
+        document.querySelectorAll(
+            ".publication-card"
+        );
+
+    const count =
+        document.getElementById(
+            "paperCount"
+        );
+
+
+    searchInput.addEventListener(
+        "input",
+        function () {
+
+            const query =
+                this.value
+                .toLowerCase()
+                .trim();
+
+            let visible = 0;
+
+
+            publications.forEach(
+                function (publication) {
+
+                    const text =
+                        publication
+                        .innerText
+                        .toLowerCase();
+
+
+                    if (
+                        text.includes(query)
+                    ) {
+
+                        publication.style.display =
+                            "block";
+
+                        visible++;
+
+                    }
+
+                    else {
+
+                        publication.style.display =
+                            "none";
+
+                    }
+
+                }
+            );
+
+
+            count.innerText =
+                visible;
+
+        }
+    );
+
+</script>
+
+
 </body>
+
 </html>
