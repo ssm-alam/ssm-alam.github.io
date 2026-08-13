@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Syed Sahajada Mahafujul Alam | Researcher</title>
+
+    <meta name="description"
+          content="Academic and research profile of Syed Sahajada Mahafujul Alam, working in computational biology, cancer immunotherapy, bioinformatics and molecular drug discovery.">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f7f9fc;
+            color: #172033;
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* NAVIGATION */
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #e5e9f0;
+        }
+
+        .nav-container {
+            max-width: 1150px;
+            margin: auto;
+            padding: 18px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 700;
+            color: #0b5ed7;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            list-style: none;
+            font-size: 14px;
+        }
+
+        .nav-links a:hover {
+            color: #0b5ed7;
+        }
+
+        /* HERO */
+
+        .hero {
+            min-height: 88vh;
+            display: flex;
+            align-items: center;
+            background:
+                radial-gradient(circle at 85% 20%, #dcecff 0, transparent 30%),
+                radial-gradient(circle at 10% 80%, #e7f7f4 0, transparent 30%),
+                #ffffff;
+        }
+
+        .hero-container {
+            max-width: 1150px;
+            width: 100%;
+            margin: auto;
+            padding: 80px 25px;
+        }
+
+        .hero-content {
+            max-width: 850px;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 7px 14px;
+            border-radius: 30px;
+            background: #eaf3ff;
+            color: #0b5ed7;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 22px;
+        }
+
+        .hero h1 {
+            font-size: clamp(42px, 7vw, 76px);
+            line-height: 1.05;
+            margin-bottom: 25px;
+            letter-spacing: -2px;
+        }
+
+        .hero h1 span {
+            color: #0b5ed7;
+        }
+
+        .hero p {
+            font-size: 20px;
+            max-width: 750px;
+            color: #586174;
+            margin-bottom: 32px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 13px 22px;
+            border-radius: 8px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: #0b5ed7;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #084db2;
+        }
+
+        .btn-secondary {
+            border: 1px solid #cdd5e1;
+            background: white;
+        }
+
+        .btn-secondary:hover {
+            border-color: #0b5ed7;
+            color: #0b5ed7;
+        }
+
+        /* GENERAL */
+
+        section {
+            padding: 90px 25px;
+        }
+
+        .container {
+            max-width: 1150px;
+            margin: auto;
+        }
+
+        .section-label {
+            color: #0b5ed7;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .section-title {
+            font-size: 38px;
+            margin-bottom: 15px;
+        }
+
+        .section-description {
+            color: #687286;
+            max-width: 720px;
+            margin-bottom: 45px;
+        }
+
+        /* RESEARCH AREAS */
+
+        .research-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .research-card {
+            background: white;
+            padding: 30px;
+            border-radius: 14px;
+            border: 1px solid #e5e9f0;
+            transition: 0.3s;
+        }
+
+        .research-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(20,40,80,0.08);
+        }
+
+        .research-icon {
+            font-size: 30px;
+            margin-bottom: 18px;
+        }
+
+        .research-card h3 {
+            margin-bottom: 10px;
+        }
+
+        .research-card p {
+            color: #687286;
+            font-size: 14px;
+        }
+
+        /* HIGHLIGHTS */
+
+        #highlights {
+            background: #0e1728;
+            color: white;
+        }
+
+        #highlights .section-description {
+            color: #aeb9ca;
+        }
+
+        .highlight-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+
+        .highlight-card {
+            background: #172238;
+            border: 1px solid #293650;
+            border-radius: 16px;
+            padding: 30px;
+            transition: 0.3s;
+        }
+
+        .highlight-card:hover {
+            transform: translateY(-6px);
+            border-color: #5e9eff;
+        }
+
+        .highlight-number {
+            color: #6da7ff;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .highlight-card h3 {
+            font-size: 21px;
+            margin-bottom: 14px;
+        }
+
+        .highlight-card p {
+            color: #b8c3d5;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .highlight-link {
+            color: #72aaff;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        /* ABOUT */
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .about-text p {
+            color: #5f697b;
+            margin-bottom: 18px;
+        }
+
+        .about-box {
+            background: white;
+            padding: 35px;
+            border-radius: 16px;
+            border: 1px solid #e5e9f0;
+        }
+
+        .about-box strong {
+            color: #0b5ed7;
+        }
+
+        /* PUBLICATIONS */
+
+        .publication-card {
+            background: white;
+            padding: 28px;
+            border-radius: 14px;
+            border: 1px solid #e5e9f0;
+            margin-bottom: 18px;
+        }
+
+        .publication-year {
+            color: #0b5ed7;
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        .publication-card h3 {
+            margin: 7px 0 10px;
+            font-size: 19px;
+        }
+
+        .publication-card p {
+            color: #687286;
+            font-size: 14px;
+        }
+
+        /* SKILLS */
+
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .skill {
+            background: white;
+            border: 1px solid #dce2eb;
+            padding: 10px 15px;
+            border-radius: 30px;
+            font-size: 14px;
+        }
+
+        /* CONTACT */
+
+        #contact {
+            background: #eef4fb;
+        }
+
+        .contact-box {
+            background: white;
+            border-radius: 18px;
+            padding: 45px;
+            text-align: center;
+            border: 1px solid #dce4ef;
+        }
+
+        .contact-box p {
+            color: #687286;
+            margin: 15px auto 25px;
+            max-width: 650px;
+        }
+
+        /* FOOTER */
+
+        footer {
+            background: #0e1728;
+            color: #aeb9ca;
+            text-align: center;
+            padding: 30px 20px;
+            font-size: 13px;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 900px) {
+
+            .research-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .highlight-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            section {
+                padding: 65px 20px;
+            }
+
+            .research-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                min-height: 80vh;
+            }
+
+            .hero h1 {
+                font-size: 43px;
+            }
+
+            .hero p {
+                font-size: 17px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- NAVIGATION -->
+
+<nav>
+    <div class="nav-container">
+
+        <a href="#" class="logo">SSM Alam</a>
+
+        <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#research">Research</a></li>
+            <li><a href="#highlights">Highlights</a></li>
+            <li><a href="#publications">Publications</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+
+    </div>
+</nav>
+
+
+<!-- HERO -->
+
+<header class="hero">
+
+    <div class="hero-container">
+
+        <div class="hero-content">
+
+            <div class="tag">
+                Researcher · Computational Biology · Bioinformatics
+            </div>
+
+            <h1>
+                Syed Sahajada<br>
+                <span>Mahafujul Alam</span>
+            </h1>
+
+            <p>
+                Computational biology researcher working at the intersection
+                of cancer immunotherapy, molecular drug discovery,
+                bioinformatics, genomics and host–pathogen interactions.
+            </p>
+
+            <div class="buttons">
+
+                <a href="#research" class="btn btn-primary">
+                    Explore Research
+                </a>
+
+                <a href="#publications" class="btn btn-secondary">
+                    View Publications
+                </a>
+
+                <a href="#contact" class="btn btn-secondary">
+                    Contact Me
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- RESEARCH AREAS -->
+
+<section id="research">
+
+    <div class="container">
+
+        <div class="section-label">
+            Research
+        </div>
+
+        <h2 class="section-title">
+            Research Areas
+        </h2>
+
+        <p class="section-description">
+            My research combines computational and biological approaches
+            to investigate disease mechanisms and identify potential
+            therapeutic strategies.
+        </p>
+
+
+        <div class="research-grid">
+
+            <div class="research-card">
+
+                <div class="research-icon">🧬</div>
+
+                <h3>Cancer Immunotherapy</h3>
+
+                <p>
+                    PD-1/PD-L1 immune checkpoint biology,
+                    cancer immunotherapy and therapeutic discovery.
+                </p>
+
+            </div>
+
+
+            <div class="research-card">
+
+                <div class="research-icon">💊</div>
+
+                <h3>Drug Discovery</h3>
+
+                <p>
+                    Virtual screening, molecular docking,
+                    molecular dynamics and structure-guided discovery.
+                </p>
+
+            </div>
+
+
+            <div class="research-card">
+
+                <div class="research-icon">🦠</div>
+
+                <h3>Host–Pathogen Biology</h3>
+
+                <p>
+                    Molecular interactions between pathogens
+                    and host proteins and cells.
+                </p>
+
+            </div>
+
+
+            <div class="research-card">
+
+                <div class="research-icon">🔬</div>
+
+                <h3>Genomics & Bioinformatics</h3>
+
+                <p>
+                    NGS, genomics, transcriptomics, sequence analysis
+                    and computational biology.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- RESEARCH HIGHLIGHTS -->
+
+<section id="highlights">
+
+    <div class="container">
+
+        <div class="section-label">
+            Featured Research
+        </div>
+
+        <h2 class="section-title">
+            Research Highlights
+        </h2>
+
+        <p class="section-description">
+            Selected studies and key findings from my research.
+        </p>
+
+
+        <div class="highlight-grid">
+
+
+            <!-- HIGHLIGHT 1 -->
+
+            <div class="highlight-card">
+
+                <div class="highlight-number">
+                    RESEARCH HIGHLIGHT 01
+                </div>
+
+                <h3>
+                    PD-L1 Small-Molecule Inhibitor Discovery
+                </h3>
+
+                <p>
+                    Structure-guided virtual screening, molecular docking
+                    and molecular dynamics were used to investigate
+                    phytochemical inhibitors targeting PD-L1.
+                </p>
+
+                <a href="#publications" class="highlight-link">
+                    View study →
+                </a>
+
+            </div>
+
+
+            <!-- HIGHLIGHT 2 -->
+
+            <div class="highlight-card">
+
+                <div class="highlight-number">
+                    RESEARCH HIGHLIGHT 02
+                </div>
+
+                <h3>
+                    PD-1 Inhibitor Discovery
+                </h3>
+
+                <p>
+                    An integrated high-throughput virtual screening and
+                    molecular dynamics strategy was used to identify
+                    potential small-molecule PD-1 inhibitors.
+                </p>
+
+                <a href="#publications" class="highlight-link">
+                    View study →
+                </a>
+
+            </div>
+
+
+            <!-- HIGHLIGHT 3 -->
+
+            <div class="highlight-card">
+
+                <div class="highlight-number">
+                    RESEARCH HIGHLIGHT 03
+                </div>
+
+                <h3>
+                    JlpA–Hsp90α Interaction
+                </h3>
+
+                <p>
+                    Functional characterization of JlpA identified
+                    a C-terminal region important for Hsp90α binding
+                    and Campylobacter host-cell adhesion.
+                </p>
+
+                <a href="#publications" class="highlight-link">
+                    View study →
+                </a>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ABOUT -->
+
+<section id="about">
+
+    <div class="container">
+
+        <div class="about-grid">
+
+            <div class="about-text">
+
+                <div class="section-label">
+                    About Me
+                </div>
+
+                <h2 class="section-title">
+                    Research-driven biology
+                </h2>
+
+                <p>
+                    I am a biological sciences researcher with interests
+                    spanning computational biology, cancer immunotherapy,
+                    molecular drug discovery and bioinformatics.
+                </p>
+
+                <p>
+                    My work integrates computational modelling,
+                    molecular docking, molecular dynamics simulations,
+                    genomics and biological experimentation to investigate
+                    molecular mechanisms and potential therapeutic targets.
+                </p>
+
+                <p>
+                    I am particularly interested in translating
+                    computational discoveries into experimentally
+                    testable biological hypotheses.
+                </p>
+
+            </div>
+
+
+            <div class="about-box">
+
+                <p>
+                    <strong>Research philosophy</strong>
+                </p>
+
+                <p>
+                    Combining computational prediction with experimental
+                    validation to understand biological systems and
+                    develop potential therapeutic strategies.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- PUBLICATIONS -->
+
+<section id="publications">
+
+    <div class="container">
+
+        <div class="section-label">
+            Publications
+        </div>
+
+        <h2 class="section-title">
+            Selected Publications
+        </h2>
+
+        <p class="section-description">
+            Selected research contributions spanning cancer,
+            computational biology, infectious disease and genomics.
+        </p>
+
+
+        <div class="publication-card">
+
+            <div class="publication-year">
+                2026
+            </div>
+
+            <h3>
+                Structure-Guided Identification of Phytochemical
+                Inhibitors Targeting Programmed Death Ligand-1 Protein
+                for Cancer Immunotherapy
+            </h3>
+
+            <p>
+                Syed Sahajada Mahafujul Alam, Showkat Ahmad Mir,
+                Arijit Samanta, Safdar Ali and Mehboob Hoque.
+            </p>
+
+        </div>
+
+
+        <div class="publication-card">
+
+            <div class="publication-year">
+                2026
+            </div>
+
+            <h3>
+                Integrated High-Throughput Virtual Screening and
+                Molecular Dynamics Approach to Identify Potential
+                PD-1 Inhibitors for Cancer Immunotherapy
+            </h3>
+
+            <p>
+                Arijit Samanta, Syed Sahajada Mahafujul Alam,
+                Safdar Ali and Mehboob Hoque.
+            </p>
+
+        </div>
+
+
+        <div class="publication-card">
+
+            <div class="publication-year">
+                2024
+            </div>
+
+            <h3>
+                Identification and functional characterization of
+                putative ligand binding domain(s) of JlpA protein
+                of Campylobacter jejuni
+            </h3>
+
+            <p>
+                Chandan Gorain, Subhadeep Gupta,
+                S.S. Mahafujul Alam and colleagues.
+            </p>
+
+        </div>
+
+
+        <div class="publication-card">
+
+            <div class="publication-year">
+                2024
+            </div>
+
+            <h3>
+                Codon usage patterns of the eleven SARS-CoV-2 variants
+                with reference to the Wuhan sequence
+            </h3>
+
+            <p>
+                Md Samim Hassan, Syed Sahajada Mahafujul Alam,
+                Arijit Samanta and colleagues.
+            </p>
+
+        </div>
+
+
+        <div class="publication-card">
+
+            <div class="publication-year">
+                Selected Research
+            </div>
+
+            <h3>
+                Structural insights into the impacts of
+                non-synonymous single nucleotide polymorphisms
+                in CD274 gene on the PD-1/PD-L1 interaction
+            </h3>
+
+            <p>
+                Computational analysis of PD-L1 variants and
+                their potential effects on PD-1 interaction.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- SKILLS -->
+
+<section id="skills">
+
+    <div class="container">
+
+        <div class="section-label">
+            Expertise
+        </div>
+
+        <h2 class="section-title">
+            Skills & Tools
+        </h2>
+
+        <p class="section-description">
+            Computational, bioinformatics and experimental skills.
+        </p>
+
+
+        <div class="skills">
+
+            <span class="skill">Python</span>
+            <span class="skill">Bioinformatics</span>
+            <span class="skill">NGS Analysis</span>
+            <span class="skill">WGS</span>
+            <span class="skill">RNA-seq</span>
+            <span class="skill">Molecular Docking</span>
+            <span class="skill">Molecular Dynamics</span>
+            <span class="skill">GROMACS</span>
+            <span class="skill">PyMOL</span>
+            <span class="skill">AutoDock</span>
+            <span class="skill">Linux</span>
+            <span class="skill">Machine Learning</span>
+            <span class="skill">RDKit</span>
+            <span class="skill">R</span>
+            <span class="skill">Genomics</span>
+            <span class="skill">Molecular Biology</span>
+            <span class="skill">Cell Culture</span>
+            <span class="skill">Flow Cytometry</span>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- CONTACT -->
+
+<section id="contact">
+
+    <div class="container">
+
+        <div class="contact-box">
+
+            <div class="section-label">
+                Contact
+            </div>
+
+            <h2 class="section-title">
+                Let's connect
+            </h2>
+
+            <p>
+                I am interested in research collaborations,
+                scientific discussions and postdoctoral opportunities.
+            </p>
+
+            <div class="buttons" style="justify-content:center;">
+
+                <a href="mailto:YOUR_EMAIL@example.com"
+                   class="btn btn-primary">
+                    Email Me
+                </a>
+
+                <a href="https://github.com/ssm-alam"
+                   target="_blank"
+                   class="btn btn-secondary">
+                    GitHub
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    © 2026 Syed Sahajada Mahafujul Alam.
+    All rights reserved.
+
+</footer>
+
+
+</body>
+</html>
