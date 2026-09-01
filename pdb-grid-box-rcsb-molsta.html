@@ -1,200 +1,1370 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>PDB Co-crystal Ligand Grid Box Generator</title>
-<link rel="stylesheet" href="https://unpkg.com/molstar@latest/build/viewer/molstar.css">
-<script src="https://unpkg.com/molstar@latest/build/viewer/molstar.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>RCSB PDB Search & Ligand Information</title>
+
 <style>
-body{margin:0;background:#f6f8fb;color:#18212f;font:15px/1.55 system-ui,sans-serif}
-.container{max-width:1050px;margin:35px auto;padding:0 20px}.card{background:white;border:1px solid #d9dee8;border-radius:14px;padding:22px;margin:16px 0;box-shadow:0 3px 14px #0000000a}
-h1{margin:0 0 6px}.subtitle,.small{color:#667085}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-label{font-weight:600;display:block;margin-bottom:6px}input,select{width:100%;padding:10px;border:1px solid #c9cfda;border-radius:8px;background:white;box-sizing:border-box}
-button{border:0;border-radius:8px;padding:10px 15px;background:#2563eb;color:white;font-weight:700;cursor:pointer}.secondary{background:#475467}
-.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:15px}.hidden{display:none}
-.notice{padding:12px 14px;border-radius:9px;background:#eef4ff;border:1px solid #c7d7fe}
-.success{padding:12px 14px;border-radius:9px;background:#ecfdf3;border:1px solid #abefc6}
-.warning{padding:12px 14px;border-radius:9px;background:#fff7ed;border:1px solid #fed7aa}
-table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:9px;border-bottom:1px solid #d9dee8}th{background:#f8fafc}
-.mono{font-family:ui-monospace,monospace}.rcsb-meta{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.chip{padding:10px;border:1px solid #d9dee8;border-radius:9px}
-#viewer{height:560px;border:1px solid #d9dee8;border-radius:10px;overflow:hidden;background:#111827}
-@media(max-width:760px){.grid,.rcsb-meta{grid-template-columns:1fr}}
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        background: #f5f7fa;
+        color: #1f2937;
+    }
+
+    .container {
+        max-width: 1100px;
+        margin: 40px auto;
+        padding: 0 20px;
+    }
+
+    h1 {
+        margin-bottom: 8px;
+    }
+
+    .subtitle {
+        color: #667085;
+        margin-bottom: 25px;
+    }
+
+    .card {
+        background: white;
+        border: 1px solid #d9dee8;
+        border-radius: 12px;
+        padding: 22px;
+        margin-bottom: 20px;
+    }
+
+    .search-row {
+        display: flex;
+        gap: 10px;
+    }
+
+    input {
+        flex: 1;
+        padding: 12px;
+        border: 1px solid #c9cfda;
+        border-radius: 8px;
+        font-size: 16px;
+        text-transform: uppercase;
+    }
+
+    button {
+        padding: 12px 18px;
+        border: none;
+        border-radius: 8px;
+        background: #2563eb;
+        color: white;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    button:hover {
+        opacity: 0.9;
+    }
+
+    button.secondary {
+        background: #475467;
+    }
+
+    button.green {
+        background: #16803c;
+    }
+
+    button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    .status {
+        margin-top: 15px;
+        padding: 12px;
+        border-radius: 8px;
+        display: none;
+    }
+
+    .success {
+        background: #ecfdf3;
+        border: 1px solid #abefc6;
+        color: #067647;
+    }
+
+    .error {
+        background: #fef3f2;
+        border: 1px solid #fecdca;
+        color: #b42318;
+    }
+
+    .info-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        margin-top: 15px;
+    }
+
+    .info-box {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        padding: 13px;
+    }
+
+    .info-label {
+        font-size: 12px;
+        color: #667085;
+        margin-bottom: 4px;
+        font-weight: 600;
+    }
+
+    .info-value {
+        word-break: break-word;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+    }
+
+    th,
+    td {
+        padding: 10px;
+        border-bottom: 1px solid #e5e7eb;
+        text-align: left;
+    }
+
+    th {
+        background: #f8fafc;
+        font-weight: 600;
+    }
+
+    tr:hover {
+        background: #f9fafb;
+    }
+
+    .ligand-row {
+        cursor: pointer;
+    }
+
+    .selected {
+        background: #eef4ff !important;
+    }
+
+    .button-row {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 18px;
+    }
+
+    .badge {
+        display: inline-block;
+        padding: 3px 8px;
+        border-radius: 20px;
+        background: #eef2ff;
+        color: #3730a3;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .mono {
+        font-family: monospace;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .note {
+        padding: 12px;
+        background: #fff7ed;
+        border: 1px solid #fed7aa;
+        border-radius: 8px;
+        margin-top: 15px;
+        color: #9a3412;
+    }
+
+    @media (max-width: 700px) {
+        .search-row {
+            flex-direction: column;
+        }
+
+        .info-grid {
+            grid-template-columns: 1fr;
+        }
+
+        table {
+            font-size: 13px;
+        }
+    }
 </style>
 </head>
+
 <body>
+
 <div class="container">
-<header>
-<h1>PDB Co-crystal Ligand Grid Box Generator</h1>
-<div class="subtitle">Fetch a structure from RCSB PDB or upload a PDB, inspect its components in 3D, and calculate an AutoDock Vina/AutoGrid search box.</div>
-</header>
 
-<div class="card">
-<h2>RCSB PDB Search / Fetch</h2>
-<div class="grid">
-<div style="grid-column:span 2"><label>PDB ID</label><input id="pdbid" placeholder="e.g. 3O96 or 4GV1"></div>
-<div style="display:flex;align-items:end"><button id="fetch" style="width:100%">Fetch from RCSB</button></div>
-</div>
-<div id="status" class="small" style="margin-top:10px"></div>
-<div id="info" class="hidden" style="margin-top:15px"></div>
+    <h1>RCSB PDB Search & Ligand Information</h1>
+
+    <div class="subtitle">
+        Search a PDB structure directly from RCSB PDB, inspect its experimental information,
+        identify non-water components, and download the deposited structure.
+    </div>
+
+
+    <!-- SEARCH -->
+    <div class="card">
+
+        <h2>1. Search RCSB PDB</h2>
+
+        <div class="search-row">
+
+            <input
+                id="pdbId"
+                type="text"
+                maxlength="12"
+                placeholder="Enter PDB ID, e.g. 3O96"
+            >
+
+            <button id="searchButton">
+                Search RCSB
+            </button>
+
+        </div>
+
+        <div id="status" class="status"></div>
+
+    </div>
+
+
+    <!-- STRUCTURE INFORMATION -->
+    <div id="structureCard" class="card hidden">
+
+        <h2>2. Structure Information</h2>
+
+        <div id="structureInfo"></div>
+
+        <div class="button-row">
+
+            <button id="open3DButton" class="green">
+                Open 3D Viewer
+            </button>
+
+            <button id="downloadPDBButton" class="secondary">
+                Download PDB
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- COMPONENTS -->
+    <div id="ligandCard" class="card hidden">
+
+        <h2>3. Detected Non-Water Components</h2>
+
+        <p>
+            Select the component that corresponds to the experimentally
+            co-crystallized small molecule.
+        </p>
+
+        <div style="overflow-x:auto;">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>CCD ID</th>
+                        <th>Chain</th>
+                        <th>Residue</th>
+                        <th>Atoms</th>
+                        <th>Chemical Name</th>
+                        <th>Type</th>
+                    </tr>
+
+                </thead>
+
+                <tbody id="componentTable">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <!-- SELECTED LIGAND -->
+    <div id="selectedCard" class="card hidden">
+
+        <h2>4. Selected Component</h2>
+
+        <div id="selectedInfo"></div>
+
+        <div class="button-row">
+
+            <button id="downloadLigandButton">
+                Download Ligand PDB
+            </button>
+
+            <button id="downloadProteinButton" class="secondary">
+                Download Protein PDB
+            </button>
+
+            <button id="downloadComplexButton" class="secondary">
+                Download Original Complex
+            </button>
+
+        </div>
+
+        <div class="note">
+
+            <strong>Important:</strong>
+            Not every HETATM component is a docking ligand.
+            Water, ions, cofactors, solvents, buffers and crystallization
+            additives should not automatically be treated as the target ligand.
+
+        </div>
+
+    </div>
+
 </div>
 
-<div id="viewerCard" class="card hidden">
-<h2>Interactive 3D Structure</h2>
-<div id="viewer"></div>
-<div class="actions">
-<button id="reset" class="secondary">Reset View</button>
-<a id="rcsb3d" target="_blank" rel="noopener"><button type="button" class="secondary">Open RCSB 3D Viewer</button></a>
-</div>
-</div>
-
-<div class="card">
-<h2>1. Upload PDB</h2>
-<input id="file" type="file" accept=".pdb,.ent,text/plain">
-<div id="fileInfo" class="small" style="margin-top:8px">No PDB selected.</div>
-</div>
-
-<div id="ligandCard" class="card hidden">
-<h2>2. Select the co-crystallized ligand</h2>
-<div class="notice">Select the small molecule that defines the experimental binding pocket. Do not select water, glycerol, ions, or unrelated additives.</div>
-<label style="margin-top:14px">Detected non-water HETATM groups</label>
-<select id="ligands"></select>
-<div id="ligandDetails" class="small" style="margin-top:8px"></div>
-</div>
-
-<div id="settings" class="card hidden">
-<h2>3. Grid-box settings</h2>
-<div class="grid">
-<div><label>Padding around ligand (Å)</label><input id="padding" type="number" value="5" min="0" step=".5"></div>
-<div><label>Minimum box dimension (Å)</label><input id="minsize" type="number" value="15" min="1" step=".5"></div>
-<div><label>AutoGrid spacing (Å)</label><input id="spacing" type="number" value=".375" min=".001" step=".001"></div>
-</div>
-<div class="actions"><button id="calc">Calculate Grid Box</button></div>
-</div>
-
-<div id="resultsCard" class="card hidden">
-<h2>4. Results</h2><div id="results"></div>
-<div class="actions">
-<button id="vina">Download Vina config</button>
-<button id="adt" class="secondary">Download AutoGrid parameters</button>
-<button id="protein" class="secondary">Download protein PDB</button>
-<button id="ligdownload" class="secondary">Download ligand PDB</button>
-<button id="complex" class="secondary">Download original complex</button>
-</div>
-</div>
-
-<div class="card">
-<h2>Method</h2>
-<p>The tool parses PDB HETATM records, excludes common water residues, and lets the user choose the relevant component. The grid center is the midpoint of the selected ligand's XYZ bounding box. Box dimensions equal ligand XYZ span plus twice the selected padding. AutoGrid npts are rounded upward from physical dimensions divided by the selected spacing.</p>
-<div class="warning"><strong>Validation:</strong> A geometry-based box is a starting point. If published or experimentally validated grid parameters exist, compare them. Redock the deposited ligand and assess pose RMSD before production docking.</div>
-</div>
-</div>
 
 <script>
-const WATER=new Set(["HOH","WAT","DOD","H2O"]);
-let pdbText="",pdbName="",groups=[],selected=null,last=null,viewer=null;
 
-function parsePDB(text){
- const map=new Map();
- for(const line of text.split(/\r?\n/)){
-  if(!line.startsWith("HETATM"))continue;
-  const res=line.slice(17,20).trim().toUpperCase();
-  if(!res||WATER.has(res))continue;
-  const chain=line.slice(21,22).trim(), seq=line.slice(22,26).trim(), ic=line.slice(26,27).trim();
-  const x=+line.slice(30,38),y=+line.slice(38,46),z=+line.slice(46,54);
-  if(![x,y,z].every(Number.isFinite))continue;
-  const key=chain+"|"+res+"|"+seq+"|"+ic;
-  if(!map.has(key))map.set(key,{chain,resname:res,resseq:seq,icode:ic,atoms:[]});
-  map.get(key).atoms.push({x,y,z,line});
- }
- return [...map.values()];
+const WATER_RESIDUES = new Set([
+    "HOH",
+    "WAT",
+    "DOD",
+    "H2O"
+]);
+
+let pdbText = "";
+let pdbId = "";
+let components = [];
+let selectedComponent = null;
+
+
+/* ---------------------------------------
+   BASIC HELPERS
+--------------------------------------- */
+
+function escapeHTML(value) {
+
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 }
-function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
-function fmt(x){return Number(x).toFixed(3)}
-function blob(s,name,type="text/plain"){const u=URL.createObjectURL(new Blob([s],{type}));const a=document.createElement("a");a.href=u;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(u),1000)}
-function populate(){
- const sel=document.getElementById("ligands");sel.innerHTML="";
- groups.forEach((g,i)=>{let o=document.createElement("option");o.value=i;o.textContent=`[${i}] ${g.resname} | Chain ${g.chain||"-"} | Residue ${g.resseq}${g.icode||""} | ${g.atoms.length} atoms`;sel.appendChild(o)});
- if(groups.length){selected=groups[0];document.getElementById("ligandDetails").textContent=`${selected.atoms.length} atoms: ${selected.resname}, chain ${selected.chain||"-"}, residue ${selected.resseq}${selected.icode||""}`;document.getElementById("ligandCard").classList.remove("hidden");document.getElementById("settings").classList.remove("hidden")}
+
+
+function downloadText(text, filename, type = "text/plain") {
+
+    const blob = new Blob(
+        [text],
+        { type: type }
+    );
+
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+
+    link.href = url;
+    link.download = filename;
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    link.remove();
+
+    setTimeout(() => {
+
+        URL.revokeObjectURL(url);
+
+    }, 1000);
 }
-document.getElementById("ligands").onchange=e=>{selected=groups[+e.target.value];document.getElementById("ligandDetails").textContent=`${selected.atoms.length} atoms: ${selected.resname}, chain ${selected.chain||"-"}, residue ${selected.resseq}${selected.icode||""}`};
 
-async function loadViewer(id){
- document.getElementById("viewerCard").classList.remove("hidden");
- if(!viewer){
-  if(!window.molstar?.Viewer)throw Error("Mol* library could not be loaded.");
-  viewer=await molstar.Viewer.create("viewer",{layoutIsExpanded:false,layoutShowControls:true,layoutShowSequence:true,layoutShowLeftPanel:true,viewportShowExpand:true,pdbProvider:"rcsb"});
- }else{try{await viewer.plugin.clear()}catch(e){}}
- await viewer.loadPdb(id.toLowerCase());
- document.getElementById("rcsb3d").href=`https://www.rcsb.org/3d-view/${encodeURIComponent(id.toUpperCase())}`;
+
+/* ---------------------------------------
+   PARSE PDB
+--------------------------------------- */
+
+function parsePDB(text) {
+
+    const groups = new Map();
+
+    const lines = text.split(/\r?\n/);
+
+    for (const line of lines) {
+
+        if (!line.startsWith("HETATM")) {
+            continue;
+        }
+
+        const resname =
+            line.slice(17, 20)
+                .trim()
+                .toUpperCase();
+
+        if (!resname) {
+            continue;
+        }
+
+        if (WATER_RESIDUES.has(resname)) {
+            continue;
+        }
+
+        const chain =
+            line.slice(21, 22).trim();
+
+        const resseq =
+            line.slice(22, 26).trim();
+
+        const icode =
+            line.slice(26, 27).trim();
+
+        const x =
+            Number(line.slice(30, 38));
+
+        const y =
+            Number(line.slice(38, 46));
+
+        const z =
+            Number(line.slice(46, 54));
+
+        const key =
+            `${chain}|${resname}|${resseq}|${icode}`;
+
+        if (!groups.has(key)) {
+
+            groups.set(
+                key,
+                {
+                    chain,
+                    resname,
+                    resseq,
+                    icode,
+                    atoms: []
+                }
+            );
+
+        }
+
+        groups.get(key).atoms.push({
+
+            x,
+            y,
+            z,
+
+            line
+
+        });
+
+    }
+
+    return [...groups.values()];
 }
-document.getElementById("reset").onclick=()=>viewer?.plugin.managers.camera.reset();
 
-async function fetchRCSB(){
- const id=document.getElementById("pdbid").value.trim().toUpperCase();
- if(!/^[A-Z0-9]{4,12}$/.test(id)){document.getElementById("status").textContent="Enter a valid PDB ID.";return}
- document.getElementById("fetch").disabled=true;document.getElementById("status").textContent="Fetching from RCSB...";
- try{
-  const er=await fetch(`https://data.rcsb.org/rest/v1/core/entry/${encodeURIComponent(id)}`);
-  if(!er.ok)throw Error("PDB entry not found.");
-  const entry=await er.json();
-  const pr=await fetch(`https://files.rcsb.org/download/${encodeURIComponent(id)}.pdb`);
-  if(!pr.ok)throw Error("RCSB entry found, but the PDB coordinate file is unavailable.");
-  pdbText=await pr.text();pdbName=id;groups=parsePDB(pdbText);populate();
-  document.getElementById("fileInfo").textContent=`${id}.pdb — fetched from RCSB PDB`;
-  const title=entry?.struct?.title||"Not reported",method=entry?.exptl?.[0]?.method||"Not reported",res=entry?.rcsb_entry_info?.resolution_combined?.[0];
-  document.getElementById("info").innerHTML=`<div class="success"><strong>${esc(id)}</strong> fetched from RCSB.</div><div class="rcsb-meta" style="margin-top:12px"><div class="chip"><strong>Title</strong>${esc(title)}</div><div class="chip"><strong>Method</strong>${esc(method)}</div><div class="chip"><strong>Resolution</strong>${res?esc(res)+" Å":"Not reported"}</div></div><h3>Detected components</h3><div style="overflow:auto"><table><tr><th>CCD</th><th>Chain</th><th>Residue</th><th>Atoms</th></tr>${groups.map(g=>`<tr><td class="mono">${esc(g.resname)}</td><td>${esc(g.chain||"-")}</td><td>${esc(g.resseq+g.icode)}</td><td>${g.atoms.length}</td></tr>`).join("")}</table></div>`;
-  document.getElementById("info").classList.remove("hidden");
-  await loadViewer(id);
-  document.getElementById("status").textContent="✓ Structure and 3D viewer loaded.";
- }catch(e){document.getElementById("status").textContent=e.message}
- finally{document.getElementById("fetch").disabled=false}
+
+/* ---------------------------------------
+   RCSB SEARCH
+--------------------------------------- */
+
+async function searchRCSB() {
+
+    const input =
+        document.getElementById("pdbId");
+
+    const id =
+        input.value
+            .trim()
+            .toUpperCase();
+
+    const status =
+        document.getElementById("status");
+
+    if (!/^[A-Z0-9]{4}$/.test(id)) {
+
+        status.className =
+            "status error";
+
+        status.style.display =
+            "block";
+
+        status.textContent =
+            "Please enter a valid 4-character PDB ID.";
+
+        return;
+    }
+
+    status.className =
+        "status";
+
+    status.style.display =
+        "block";
+
+    status.textContent =
+        "Searching RCSB PDB...";
+
+    document
+        .getElementById("structureCard")
+        .classList.add("hidden");
+
+    document
+        .getElementById("ligandCard")
+        .classList.add("hidden");
+
+    document
+        .getElementById("selectedCard")
+        .classList.add("hidden");
+
+
+    try {
+
+        /* Get metadata */
+
+        const metadataURL =
+            `https://data.rcsb.org/rest/v1/core/entry/${id}`;
+
+        const metadataResponse =
+            await fetch(metadataURL);
+
+        if (!metadataResponse.ok) {
+
+            throw new Error(
+                `PDB ID ${id} was not found in RCSB PDB.`
+            );
+
+        }
+
+        const metadata =
+            await metadataResponse.json();
+
+
+        /* Get PDB coordinates */
+
+        const pdbURL =
+            `https://files.rcsb.org/download/${id}.pdb`;
+
+        const pdbResponse =
+            await fetch(pdbURL);
+
+        if (!pdbResponse.ok) {
+
+            throw new Error(
+                "RCSB entry was found, but the PDB coordinate file could not be downloaded."
+            );
+
+        }
+
+        pdbText =
+            await pdbResponse.text();
+
+        pdbId =
+            id;
+
+
+        /* Parse components */
+
+        components =
+            parsePDB(pdbText);
+
+
+        /* Display metadata */
+
+        displayStructureInfo(
+            metadata,
+            id
+        );
+
+
+        /* Display components */
+
+        await enrichComponents();
+
+        displayComponents();
+
+
+        /* Success */
+
+        status.className =
+            "status success";
+
+        status.style.display =
+            "block";
+
+        status.innerHTML =
+            `✓ <strong>${escapeHTML(id)}</strong> successfully fetched from RCSB PDB.`;
+
+
+    } catch (error) {
+
+        status.className =
+            "status error";
+
+        status.style.display =
+            "block";
+
+        status.textContent =
+            error.message;
+
+    }
+
 }
-document.getElementById("fetch").onclick=fetchRCSB;
-document.getElementById("pdbid").onkeydown=e=>{if(e.key==="Enter")fetchRCSB()};
 
-document.getElementById("file").onchange=async e=>{
- const f=e.target.files[0];if(!f)return;pdbText=await f.text();pdbName=f.name.replace(/\.(pdb|ent)$/i,"");groups=parsePDB(pdbText);populate();document.getElementById("fileInfo").textContent=`${f.name} — ${pdbText.split(/\r?\n/).length} lines`;document.getElementById("viewerCard").classList.add("hidden");
-};
 
-document.getElementById("calc").onclick=()=>{
- if(!selected)return;
- const pad=+document.getElementById("padding").value,minsize=+document.getElementById("minsize").value,spacing=+document.getElementById("spacing").value;
- const xs=selected.atoms.map(a=>a.x),ys=selected.atoms.map(a=>a.y),zs=selected.atoms.map(a=>a.z);
- const minX=Math.min(...xs),maxX=Math.max(...xs),minY=Math.min(...ys),maxY=Math.max(...ys),minZ=Math.min(...zs),maxZ=Math.max(...zs);
- const cx=(minX+maxX)/2,cy=(minY+maxY)/2,cz=(minZ+maxZ)/2;
- const sx=Math.max(maxX-minX+2*pad,minsize),sy=Math.max(maxY-minY+2*pad,minsize),sz=Math.max(maxZ-minZ+2*pad,minsize);
- const nx=Math.ceil(sx/spacing),ny=Math.ceil(sy/spacing),nz=Math.ceil(sz/spacing);
- last={cx,cy,cz,sx,sy,sz,nx,ny,nz,spacing};
- document.getElementById("results").innerHTML=`<div class="success">Box calculated from the complete XYZ bounding range of the selected component.</div>
- <h3>Binding-site center</h3><table><tr><th>Parameter</th><th>Value (Å)</th></tr><tr><td class="mono">center_x</td><td class="mono">${fmt(cx)}</td></tr><tr><td class="mono">center_y</td><td class="mono">${fmt(cy)}</td></tr><tr><td class="mono">center_z</td><td class="mono">${fmt(cz)}</td></tr></table>
- <h3>AutoDock Vina</h3><table><tr><th>Parameter</th><th>Value</th></tr><tr><td class="mono">size_x</td><td class="mono">${fmt(sx)}</td></tr><tr><td class="mono">size_y</td><td class="mono">${fmt(sy)}</td></tr><tr><td class="mono">size_z</td><td class="mono">${fmt(sz)}</td></tr></table>
- <h3>AutoGrid / AutoDockTools</h3><table><tr><th>Parameter</th><th>Value</th></tr><tr><td class="mono">spacing</td><td class="mono">${fmt(spacing)} Å</td></tr><tr><td class="mono">npts</td><td class="mono">${nx} ${ny} ${nz}</td></tr><tr><td class="mono">center</td><td class="mono">${fmt(cx)} ${fmt(cy)} ${fmt(cz)}</td></tr></table>`;
- document.getElementById("resultsCard").classList.remove("hidden");
-};
+/* ---------------------------------------
+   STRUCTURE INFORMATION
+--------------------------------------- */
 
-document.getElementById("vina").onclick=()=>{if(!last)return;let r=last;blob(`receptor = ${pdbName}.pdbqt
-ligand = target_ligand.pdbqt
+function displayStructureInfo(
+    metadata,
+    id
+) {
 
-center_x = ${fmt(r.cx)}
-center_y = ${fmt(r.cy)}
-center_z = ${fmt(r.cz)}
+    const title =
+        metadata?.struct?.title ||
+        "Not reported";
 
-size_x = ${fmt(r.sx)}
-size_y = ${fmt(r.sy)}
-size_z = ${fmt(r.sz)}
+    const method =
+        metadata?.exptl?.[0]?.method ||
+        "Not reported";
 
-exhaustiveness = 16
-num_modes = 20
-energy_range = 4
-`,` ${pdbName}_vina_config.txt`.trim())};
-document.getElementById("adt").onclick=()=>{if(!last)return;let r=last;blob(`spacing = ${fmt(r.spacing)}
-npts = ${r.nx} ${r.ny} ${r.nz}
-center = ${fmt(r.cx)} ${fmt(r.cy)} ${fmt(r.cz)}
-`,` ${pdbName}_autogrid_parameters.txt`.trim())};
+    const resolution =
+        metadata
+            ?.rcsb_entry_info
+            ?.resolution_combined?.[0];
 
-document.getElementById("protein").onclick=()=>{if(!pdbText)return;let a=pdbText.split(/\r?\n/).filter(x=>x.startsWith("ATOM  "));a.push("END");blob(a.join("\n")+"\n",`${pdbName}_protein.pdb`,"chemical/x-pdb")};
-document.getElementById("ligdownload").onclick=()=>{if(!selected)return;let lines=pdbText.split(/\r?\n/),ser=new Set(selected.atoms.map(a=>a.line.slice(6,11).trim()));let lig=lines.filter(x=>x.startsWith("HETATM")&&x.slice(17,20).trim().toUpperCase()===selected.resname&&x.slice(21,22).trim()===selected.chain&&x.slice(22,26).trim()===selected.resseq&&x.slice(26,27).trim()===selected.icode);let con=lines.filter(x=>x.startsWith("CONECT")&&(x.match(/\d+/g)||[]).some(n=>ser.has(n)));blob([...lig,...con,"END"].join("\n")+"\n",`${pdbName}_${selected.resname}_${selected.resseq}_ligand.pdb`,"chemical/x-pdb")};
-document.getElementById("complex").onclick=()=>{if(pdbText)blob(pdbText,`${pdbName}_original_complex.pdb`,"chemical/x-pdb")};
+    const deposition =
+        metadata
+            ?.rcsb_accession_info
+            ?.deposit_date;
+
+    const release =
+        metadata
+            ?.rcsb_accession_info
+            ?.initial_release_date;
+
+
+    const info =
+        document.getElementById(
+            "structureInfo"
+        );
+
+
+    info.innerHTML = `
+
+        <div class="info-grid">
+
+            <div class="info-box">
+
+                <div class="info-label">
+                    PDB ID
+                </div>
+
+                <div class="info-value mono">
+                    ${escapeHTML(id)}
+                </div>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <div class="info-label">
+                    Experimental Method
+                </div>
+
+                <div class="info-value">
+                    ${escapeHTML(method)}
+                </div>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <div class="info-label">
+                    Resolution
+                </div>
+
+                <div class="info-value">
+
+                    ${
+                        resolution
+                        ? escapeHTML(
+                            Number(resolution)
+                            .toFixed(2)
+                        ) + " Å"
+                        : "Not reported"
+                    }
+
+                </div>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <div class="info-label">
+                    Initial Release
+                </div>
+
+                <div class="info-value">
+
+                    ${
+                        release
+                        ? escapeHTML(
+                            String(release)
+                            .slice(0,10)
+                        )
+                        : "Not reported"
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="info-box" style="margin-top:12px">
+
+            <div class="info-label">
+                Structure Title
+            </div>
+
+            <div class="info-value">
+                ${escapeHTML(title)}
+            </div>
+
+        </div>
+
+    `;
+
+
+    document
+        .getElementById("structureCard")
+        .classList.remove("hidden");
+
+
+    /*
+       3D viewer is NOT opened automatically.
+       It opens only when the user clicks the button.
+    */
+
+    document
+        .getElementById("open3DButton")
+        .onclick = function() {
+
+            const url =
+                `https://www.rcsb.org/3d-view/${id}`;
+
+            window.open(
+                url,
+                "_blank",
+                "noopener"
+            );
+
+        };
+
+
+    document
+        .getElementById("downloadPDBButton")
+        .onclick = function() {
+
+            downloadText(
+                pdbText,
+                `${id}.pdb`,
+                "chemical/x-pdb"
+            );
+
+        };
+
+}
+
+
+/* ---------------------------------------
+   GET CHEMICAL COMPONENT INFORMATION
+--------------------------------------- */
+
+async function enrichComponents() {
+
+    await Promise.all(
+
+        components.map(
+            async component => {
+
+                try {
+
+                    const url =
+                        `https://data.rcsb.org/rest/v1/core/chemcomp/${component.resname}`;
+
+                    const response =
+                        await fetch(url);
+
+                    if (!response.ok) {
+                        return;
+                    }
+
+                    const data =
+                        await response.json();
+
+                    component.chemName =
+                        data?.chem_comp?.name ||
+                        "";
+
+                    component.formula =
+                        data?.chem_comp?.formula ||
+                        "";
+
+                    component.type =
+                        data?.chem_comp?.type ||
+                        "";
+
+                    component.formulaWeight =
+                        data?.chem_comp?.formula_weight ||
+                        "";
+
+                } catch (error) {
+
+                    console.warn(
+                        "Chemical component lookup failed:",
+                        component.resname
+                    );
+
+                }
+
+            }
+        )
+
+    );
+
+}
+
+
+/* ---------------------------------------
+   DISPLAY COMPONENTS
+--------------------------------------- */
+
+function displayComponents() {
+
+    const tbody =
+        document.getElementById(
+            "componentTable"
+        );
+
+    tbody.innerHTML = "";
+
+
+    if (!components.length) {
+
+        tbody.innerHTML = `
+
+            <tr>
+
+                <td colspan="6">
+
+                    No non-water HETATM components
+                    were detected.
+
+                </td>
+
+            </tr>
+
+        `;
+
+        document
+            .getElementById("ligandCard")
+            .classList.remove("hidden");
+
+        return;
+    }
+
+
+    components.forEach(
+        (component, index) => {
+
+            const row =
+                document.createElement("tr");
+
+            row.className =
+                "ligand-row";
+
+
+            row.innerHTML = `
+
+                <td class="mono">
+
+                    ${escapeHTML(
+                        component.resname
+                    )}
+
+                </td>
+
+
+                <td>
+
+                    ${escapeHTML(
+                        component.chain || "-"
+                    )}
+
+                </td>
+
+
+                <td>
+
+                    ${escapeHTML(
+                        component.resseq +
+                        (component.icode || "")
+                    )}
+
+                </td>
+
+
+                <td>
+
+                    ${component.atoms.length}
+
+                </td>
+
+
+                <td>
+
+                    ${
+                        escapeHTML(
+                            component.chemName ||
+                            "Not available"
+                        )
+                    }
+
+                </td>
+
+
+                <td>
+
+                    <span class="badge">
+
+                        ${
+                            escapeHTML(
+                                component.type ||
+                                "HETATM"
+                            )
+                        }
+
+                    </span>
+
+                </td>
+
+            `;
+
+
+            row.addEventListener(
+                "click",
+                () => {
+
+                    document
+                        .querySelectorAll(
+                            ".ligand-row"
+                        )
+                        .forEach(
+                            r =>
+                                r.classList.remove(
+                                    "selected"
+                                )
+                        );
+
+                    row.classList.add(
+                        "selected"
+                    );
+
+                    selectedComponent =
+                        component;
+
+                    showSelectedComponent();
+
+                }
+            );
+
+
+            tbody.appendChild(row);
+
+        }
+    );
+
+
+    document
+        .getElementById("ligandCard")
+        .classList.remove("hidden");
+
+}
+
+
+/* ---------------------------------------
+   SELECTED COMPONENT
+--------------------------------------- */
+
+function showSelectedComponent() {
+
+    if (!selectedComponent) {
+        return;
+    }
+
+
+    const c =
+        selectedComponent;
+
+
+    document
+        .getElementById("selectedInfo")
+        .innerHTML = `
+
+        <div class="info-grid">
+
+            <div class="info-box">
+
+                <div class="info-label">
+                    Component ID
+                </div>
+
+                <div class="info-value mono">
+                    ${escapeHTML(c.resname)}
+                </div>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <div class="info-label">
+                    Chain
+                </div>
+
+                <div class="info-value">
+                    ${escapeHTML(c.chain || "-")}
+                </div>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <div class="info-label">
+                    Residue
+                </div>
+
+                <div class="info-value">
+                    ${escapeHTML(
+                        c.resseq +
+                        (c.icode || "")
+                    )}
+                </div>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <div class="info-label">
+                    Atom Count
+                </div>
+
+                <div class="info-value">
+                    ${c.atoms.length}
+                </div>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <div class="info-label">
+                    Chemical Name
+                </div>
+
+                <div class="info-value">
+                    ${escapeHTML(
+                        c.chemName ||
+                        "Not available"
+                    )}
+                </div>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <div class="info-label">
+                    Formula
+                </div>
+
+                <div class="info-value">
+                    ${escapeHTML(
+                        c.formula ||
+                        "Not available"
+                    )}
+                </div>
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    document
+        .getElementById("selectedCard")
+        .classList.remove("hidden");
+
+}
+
+
+/* ---------------------------------------
+   DOWNLOAD SELECTED LIGAND
+--------------------------------------- */
+
+document
+    .getElementById("downloadLigandButton")
+    .addEventListener(
+        "click",
+        () => {
+
+            if (!selectedComponent) {
+                return;
+            }
+
+
+            const c =
+                selectedComponent;
+
+
+            const lines =
+                pdbText.split(/\r?\n/);
+
+
+            const serials =
+                new Set(
+                    c.atoms.map(
+                        atom =>
+                            atom.line
+                                .slice(6,11)
+                                .trim()
+                    )
+                );
+
+
+            /*
+               Preserve the original HETATM
+               coordinate lines.
+            */
+
+            const ligandLines =
+                lines.filter(
+                    line => {
+
+                        if (
+                            !line.startsWith(
+                                "HETATM"
+                            )
+                        ) {
+                            return false;
+                        }
+
+
+                        const res =
+                            line
+                                .slice(17,20)
+                                .trim()
+                                .toUpperCase();
+
+                        const chain =
+                            line
+                                .slice(21,22)
+                                .trim();
+
+                        const seq =
+                            line
+                                .slice(22,26)
+                                .trim();
+
+                        const icode =
+                            line
+                                .slice(26,27)
+                                .trim();
+
+
+                        return (
+                            res === c.resname &&
+                            chain === c.chain &&
+                            seq === c.resseq &&
+                            icode === c.icode
+                        );
+
+                    }
+                );
+
+
+            /*
+               Preserve relevant CONECT records.
+            */
+
+            const conectLines =
+                lines.filter(
+                    line => {
+
+                        if (
+                            !line.startsWith(
+                                "CONECT"
+                            )
+                        ) {
+                            return false;
+                        }
+
+
+                        const numbers =
+                            line.match(
+                                /\d+/g
+                            ) || [];
+
+
+                        return numbers.some(
+                            number =>
+                                serials.has(
+                                    number
+                                )
+                        );
+
+                    }
+                );
+
+
+            const output = [
+
+                ...ligandLines,
+
+                ...conectLines,
+
+                "END"
+
+            ].join("\n") + "\n";
+
+
+            downloadText(
+                output,
+                `${pdbId}_${c.resname}_${c.resseq}_ligand.pdb`,
+                "chemical/x-pdb"
+            );
+
+        }
+    );
+
+
+/* ---------------------------------------
+   DOWNLOAD PROTEIN
+--------------------------------------- */
+
+document
+    .getElementById("downloadProteinButton")
+    .addEventListener(
+        "click",
+        () => {
+
+            const lines =
+                pdbText.split(/\r?\n/);
+
+
+            /*
+               Protein = original ATOM records.
+            */
+
+            const proteinLines =
+                lines.filter(
+                    line =>
+                        line.startsWith(
+                            "ATOM  "
+                        )
+                );
+
+
+            proteinLines.push(
+                "END"
+            );
+
+
+            downloadText(
+                proteinLines.join("\n") + "\n",
+                `${pdbId}_protein.pdb`,
+                "chemical/x-pdb"
+            );
+
+        }
+    );
+
+
+/* ---------------------------------------
+   DOWNLOAD ORIGINAL COMPLEX
+--------------------------------------- */
+
+document
+    .getElementById("downloadComplexButton")
+    .addEventListener(
+        "click",
+        () => {
+
+            downloadText(
+                pdbText,
+                `${pdbId}_original_complex.pdb`,
+                "chemical/x-pdb"
+            );
+
+        }
+    );
+
+
+/* ---------------------------------------
+   ENTER KEY
+--------------------------------------- */
+
+document
+    .getElementById("pdbId")
+    .addEventListener(
+        "keydown",
+        event => {
+
+            if (
+                event.key === "Enter"
+            ) {
+
+                searchRCSB();
+
+            }
+
+        }
+    );
+
+
+document
+    .getElementById("searchButton")
+    .addEventListener(
+        "click",
+        searchRCSB
+    );
+
 </script>
-</body></html>
+
+</body>
+</html>
