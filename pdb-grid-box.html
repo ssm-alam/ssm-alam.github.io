@@ -110,7 +110,7 @@ footer{color:var(--muted);font-size:13px;margin:25px 0 50px}
   <div class="warning">
     <strong>Validation is essential:</strong> this is a pocket-definition utility, not a docking
     validator. For publication-quality docking, redock the experimental ligand and check pose RMSD
-    before using the box for fenpyroximate. Different PDB structures and papers can legitimately use
+    before using the box for liagnd. Different PDB structures and papers can legitimately use
     different grid centers and dimensions.
   </div>
 </div>
@@ -299,7 +299,7 @@ document.getElementById("calculateBtn").addEventListener("click", () => {
     <div class="warning" style="margin-top:14px">
       <strong>Validation:</strong> This is a geometry-based starting box. If published/validated
       AutoDockTools parameters exist for this PDB, compare them and preferentially reproduce the
-      validated protocol. Redock the co-crystal ligand and check RMSD before docking fenpyroximate.
+      validated protocol. Redock the co-crystal ligand and check RMSD before docking ligand.
     </div>
   `;
   resultsCard.classList.remove("hidden");
@@ -314,7 +314,7 @@ document.getElementById("downloadConfig").addEventListener("click", () => {
 # Validate by redocking the experimental ligand before production docking.
 
 receptor = ${pdbName}.pdbqt
-ligand = fenpyroximate.pdbqt
+ligand = ligand.pdbqt
 
 center_x = ${fmt(r.center_x)}
 center_y = ${fmt(r.center_y)}
