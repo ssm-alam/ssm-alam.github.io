@@ -47,7 +47,8 @@ footer{color:var(--muted);font-size:13px;margin:25px 0 50px}
 <div class="container">
 <header>
   <h1>PDB Co-crystal Ligand Grid Box Generator</h1>
-  <div class="subtitle">Fetch a structure from RCSB PDB or upload a PDB, inspect co-crystallized components, and calculate an AutoDock Vina/AutoGrid search box directly in your browser.</div>
+  <div class="subtitle">Fetch a structure from the RCSB PDB or upload a PDB file, inspect its co-crystallized components, and calculate an AutoDock Vina/AutoGrid search box directly here.
+</div>
 </header>
 
 <div class="card">
@@ -265,7 +266,7 @@ async function fetchFromRCSB() {
     showRcsbInfo(entry, id, groups);
 
     // Make the RCSB structure behave exactly like an uploaded PDB.
-    fileInfo.textContent = `${id}.pdb — fetched from RCSB PDB`;
+    fileInfo.textContent = `${id}.pdb - fetched from RCSB PDB`;
     ligandCard.classList.remove("hidden");
     settingsCard.classList.remove("hidden");
     resultsCard.classList.add("hidden");
