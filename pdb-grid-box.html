@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PDB Co-crystal Ligand Grid Box Generator</title>
+<meta name="description" content="Browser-based PDB co-crystallized ligand centroid and AutoDock Vina grid-box generator.">
+<style>
+:root{--bg:#f6f8fb;--card:#fff;--text:#18212f;--muted:#667085;--line:#d9dee8;--accent:#2563eb;--accent2:#1d4ed8;--ok:#067647;--warn:#b54708}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.55 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.container{max-width:1050px;margin:40px auto;padding:0 20px}
+header{margin-bottom:24px}
+h1{margin:0 0 6px;font-size:30px}
+h2{font-size:19px;margin:0 0 12px}
+.subtitle{color:var(--muted)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;margin:16px 0;box-shadow:0 3px 14px rgba(16,24,40,.04)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:760px){.grid{grid-template-columns:1fr}}
+label{font-weight:600;display:block;margin-bottom:6px}
+input[type=file],input[type=number],select{width:100%;padding:10px;border:1px solid #c9cfda;border-radius:8px;background:#fff}
+button{border:0;border-radius:8px;padding:10px 15px;background:var(--accent);color:#fff;font-weight:700;cursor:pointer}
+button:hover{background:var(--accent2)}
+button.secondary{background:#475467}
+button:disabled{opacity:.5;cursor:not-allowed}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:15px}
+.notice{padding:12px 14px;border-radius:9px;background:#eef4ff;border:1px solid #c7d7fe;color:#193b8f}
+.warning{padding:12px 14px;border-radius:9px;background:#fff7ed;border:1px solid #fed7aa;color:#9a3412}
+.success{padding:12px 14px;border-radius:9px;background:#ecfdf3;border:1px solid #abefc6;color:var(--ok)}
+.hidden{display:none}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:9px;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:#f8fafc}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.result{font-size:16px}
+.small{font-size:13px;color:var(--muted)}
+footer{color:var(--muted);font-size:13px;margin:25px 0 50px}
+.badge{display:inline-block;padding:2px 8px;border-radius:99px;background:#eef2ff;color:#3730a3;font-size:12px;font-weight:700}
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+  <h1>PDB Co-crystal Ligand Grid Box Generator</h1>
+  <div class="subtitle">Calculate a ligand-centered AutoDock Vina search box directly in your browser.</div>
+</header>
+
+<div class="card">
+  <h2>1. Upload PDB</h2>
+  <input id="pdbFile" type="file" accept=".pdb,.ent,text/plain">
+  <div id="fileInfo" class="small" style="margin-top:8px">No PDB selected.</div>
+</div>
+
+<div id="ligandCard" class="card hidden">
+  <h2>2. Select the co-crystallized ligand</h2>
+  <div class="notice" style="margin-bottom:14px">
+    Select the actual small-molecule ligand that defines the experimental binding pocket.
+    Do not select water, glycerol, ions, or unrelated additives.
+  </div>
+  <label for="ligandSelect">Detected non-water HETATM groups</label>
+  <select id="ligandSelect"></select>
+  <div id="ligandDetails" class="small" style="margin-top:8px"></div>
+</div>
+
+<div id="settingsCard" class="card hidden">
+  <h2>3. Grid-box settings</h2>
+  <div class="grid">
+    <div>
+      <label for="padding">Padding (Å)</label>
+      <input id="padding" type="number" value="5.0" min="0" step="0.5">
+    </div>
+    <div>
+      <label for="minSize">Minimum box dimension (Å)</label>
+      <input id="minSize" type="number" value="15.0" min="1" step="0.5">
+    </div>
+    <div>
+      <label for="exhaustiveness">Vina exhaustiveness</label>
+      <input id="exhaustiveness" type="number" value="16" min="1" step="1">
+    </div>
+  </div>
+  <div class="actions">
+    <button id="calculateBtn">Calculate Grid Box</button>
+  </div>
+</div>
+
+<div id="resultsCard" class="card hidden">
+  <h2>4. Results</h2>
+  <div id="results"></div>
+  <div class="actions">
+    <button id="downloadConfig">Download Vina config</button>
+    <button id="downloadLigand" class="secondary">Download selected ligand PDB</button>
+  </div>
+</div>
+
+<div class="card">
+  <h2>Method</h2>
+  <p>
+    The tool parses PDB <span class="mono">HETATM</span> records, groups atoms by chain/residue,
+    excludes common water residues, and calculates the selected ligand centroid as the arithmetic
+    mean of its atomic coordinates. Box dimensions are the ligand XYZ span plus twice the chosen
+    padding.
+  </p>
+  <div class="warning">
+    <strong>Validation is essential:</strong> this is a pocket-definition utility, not a docking
+    validator. For publication-quality docking, redock the experimental ligand and check pose RMSD
+    before using the box for fenpyroximate. Different PDB structures and papers can legitimately use
+    different grid centers and dimensions.
+  </div>
+</div>
+
+<footer>
+  Runs entirely in the browser. PDB files are not uploaded by this page.
+  AutoDock Vina parameters are generated as plain text for user review.
+</footer>
+</div>
+
+<script>
+const WATER = new Set(["HOH","WAT","DOD","H2O"]);
+let pdbText = "";
+let pdbName = "";
+let groups = [];
+let selected = null;
+let lastResult = null;
+
+const fileInput = document.getElementById("pdbFile");
+const ligandCard = document.getElementById("ligandCard");
+const settingsCard = document.getElementById("settingsCard");
+const resultsCard = document.getElementById("resultsCard");
+const ligandSelect = document.getElementById("ligandSelect");
+const ligandDetails = document.getElementById("ligandDetails");
+const fileInfo = document.getElementById("fileInfo");
+
+fileInput.addEventListener("change", async () => {
+  const file = fileInput.files[0];
+  if (!file) return;
+  pdbText = await file.text();
+  pdbName = file.name.replace(/\.(pdb|ent)$/i,"");
+  groups = parsePDB(pdbText);
+
+  fileInfo.textContent = `${file.name} — ${pdbText.split(/\\r?\\n/).length} lines`;
+  ligandSelect.innerHTML = "";
+
+  if (!groups.length) {
+    ligandCard.classList.add("hidden");
+    settingsCard.classList.add("hidden");
+    resultsCard.classList.add("hidden");
+    fileInfo.innerHTML += ' <span style="color:#b42318">No non-water HETATM groups were detected.</span>';
+    return;
+  }
+
+  groups.forEach((g, i) => {
+    const opt = document.createElement("option");
+    opt.value = i;
+    opt.textContent = `[${i}] Chain ${g.chain || "-"} | ${g.resname} | residue ${g.resseq}${g.icode || ""} | ${g.atoms.length} atoms`;
+    ligandSelect.appendChild(opt);
+  });
+
+  ligandCard.classList.remove("hidden");
+  settingsCard.classList.remove("hidden");
+  resultsCard.classList.add("hidden");
+  updateLigandDetails();
+});
+
+ligandSelect.addEventListener("change", updateLigandDetails);
+
+function parsePDB(text) {
+  const map = new Map();
+  const lines = text.split(/\r?\n/);
+  for (const line of lines) {
+    if (!line.startsWith("HETATM")) continue;
+    const resname = line.slice(17,20).trim().toUpperCase();
+    if (!resname || WATER.has(resname)) continue;
+
+    const chain = line.slice(21,22).trim();
+    const resseq = line.slice(22,26).trim();
+    const icode = line.slice(26,27).trim();
+    const key = `${chain}|${resname}|${resseq}|${icode}`;
+
+    const x = Number.parseFloat(line.slice(30,38));
+    const y = Number.parseFloat(line.slice(38,46));
+    const z = Number.parseFloat(line.slice(46,54));
+    if (![x,y,z].every(Number.isFinite)) continue;
+
+    if (!map.has(key)) {
+      map.set(key, {chain,resname,resseq,icode,atoms:[]});
+    }
+    map.get(key).atoms.push({
+      x,y,z,
+      line: line
+    });
+  }
+  return Array.from(map.values());
+}
+
+function updateLigandDetails() {
+  const idx = Number(ligandSelect.value);
+  selected = groups[idx];
+  if (!selected) return;
+  ligandDetails.textContent =
+    `${selected.atoms.length} atoms detected. Residue: ${selected.resname} ` +
+    `on chain ${selected.chain || "-"}, residue ${selected.resseq}${selected.icode || ""}.`;
+}
+
+document.getElementById("calculateBtn").addEventListener("click", () => {
+  if (!selected || !selected.atoms.length) return;
+
+  const padding = Number(document.getElementById("padding").value);
+  const minSize = Number(document.getElementById("minSize").value);
+  const exhaustiveness = Number(document.getElementById("exhaustiveness").value);
+
+  if (![padding,minSize,exhaustiveness].every(Number.isFinite) || padding < 0 || minSize <= 0) {
+    alert("Please enter valid settings.");
+    return;
+  }
+
+  const xs = selected.atoms.map(a=>a.x);
+  const ys = selected.atoms.map(a=>a.y);
+  const zs = selected.atoms.map(a=>a.z);
+
+  const center_x = mean(xs);
+  const center_y = mean(ys);
+  const center_z = mean(zs);
+
+  const size_x = Math.max(max(xs)-min(xs)+2*padding, minSize);
+  const size_y = Math.max(max(ys)-min(ys)+2*padding, minSize);
+  const size_z = Math.max(max(zs)-min(zs)+2*padding, minSize);
+
+  lastResult = {center_x,center_y,center_z,size_x,size_y,size_z,padding,minSize,exhaustiveness};
+
+  document.getElementById("results").innerHTML = `
+    <div class="success">Grid box calculated from the selected co-crystallized ligand.</div>
+    <table style="margin-top:14px">
+      <tr><th>Parameter</th><th>Value (Å)</th></tr>
+      <tr><td class="mono">center_x</td><td class="mono">${fmt(center_x)}</td></tr>
+      <tr><td class="mono">center_y</td><td class="mono">${fmt(center_y)}</td></tr>
+      <tr><td class="mono">center_z</td><td class="mono">${fmt(center_z)}</td></tr>
+      <tr><td class="mono">size_x</td><td class="mono">${fmt(size_x)}</td></tr>
+      <tr><td class="mono">size_y</td><td class="mono">${fmt(size_y)}</td></tr>
+      <tr><td class="mono">size_z</td><td class="mono">${fmt(size_z)}</td></tr>
+    </table>
+    <p class="small" style="margin-top:12px">
+      Selected ligand: <span class="badge">${selected.resname}</span>
+      Chain ${selected.chain || "-"}, residue ${selected.resseq}${selected.icode || ""}.
+    </p>
+  `;
+  resultsCard.classList.remove("hidden");
+});
+
+document.getElementById("downloadConfig").addEventListener("click", () => {
+  if (!lastResult) return;
+  const r = lastResult;
+  const config =
+`# AutoDock Vina configuration generated from ${pdbName}.pdb
+# Binding-site center calculated from co-crystallized ligand ${selected.resname}
+# Review/validate by redocking the experimental ligand before production docking.
+
+receptor = ${pdbName}.pdbqt
+ligand = fenpyroximate.pdbqt
+
+center_x = ${fmt(r.center_x)}
+center_y = ${fmt(r.center_y)}
+center_z = ${fmt(r.center_z)}
+
+size_x = ${fmt(r.size_x)}
+size_y = ${fmt(r.size_y)}
+size_z = ${fmt(r.size_z)}
+
+exhaustiveness = ${Math.round(r.exhaustiveness)}
+num_modes = 20
+energy_range = 4
+`;
+  downloadBlob(config, `${pdbName}_vina_config.txt`, "text/plain");
+});
+
+document.getElementById("downloadLigand").addEventListener("click", () => {
+  if (!selected) return;
+  const lines = selected.atoms.map(a=>a.line);
+  lines.push("END");
+  downloadBlob(lines.join("\\n")+"\\n", `${pdbName}_${selected.resname}_${selected.resseq}_ligand.pdb`, "chemical/x-pdb");
+});
+
+function mean(a){return a.reduce((s,v)=>s+v,0)/a.length}
+function min(a){return Math.min(...a)}
+function max(a){return Math.max(...a)}
+function fmt(v){return Number(v).toFixed(3)}
+function downloadBlob(text, filename, type){
+  const blob = new Blob([text], {type});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href=url; a.download=filename; a.click();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+</script>
+</body>
+</html>
