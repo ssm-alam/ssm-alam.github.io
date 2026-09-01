@@ -65,13 +65,20 @@ footer{color:var(--muted);font-size:13px;margin:25px 0 50px}
   <h2>3. Grid-box settings</h2>
   <div class="grid">
     <div>
-      <label for="padding">Padding (Å)</label>
+      <label for="padding">Padding around ligand (Å)</label>
       <input id="padding" type="number" value="5.0" min="0" step="0.5">
+      <div class="small">Applied to both sides of each XYZ dimension.</div>
     </div>
     <div>
       <label for="minSize">Minimum box dimension (Å)</label>
       <input id="minSize" type="number" value="15.0" min="1" step="0.5">
     </div>
+    <div>
+      <label for="spacing">AutoGrid spacing (Å)</label>
+      <input id="spacing" type="number" value="0.375" min="0.001" step="0.001">
+    </div>
+  </div>
+  <div class="grid" style="margin-top:12px">
     <div>
       <label for="exhaustiveness">Vina exhaustiveness</label>
       <input id="exhaustiveness" type="number" value="16" min="1" step="1">
@@ -87,6 +94,7 @@ footer{color:var(--muted);font-size:13px;margin:25px 0 50px}
   <div id="results"></div>
   <div class="actions">
     <button id="downloadConfig">Download Vina config</button>
+    <button id="downloadADT" class="secondary">Download AutoGrid parameters</button>
     <button id="downloadLigand" class="secondary">Download selected ligand PDB</button>
   </div>
 </div>
@@ -95,9 +103,9 @@ footer{color:var(--muted);font-size:13px;margin:25px 0 50px}
   <h2>Method</h2>
   <p>
     The tool parses PDB <span class="mono">HETATM</span> records, groups atoms by chain/residue,
-    excludes common water residues, and calculates the selected ligand centroid as the arithmetic
-    mean of its atomic coordinates. Box dimensions are the ligand XYZ span plus twice the chosen
-    padding.
+    excludes common water residues, and calculates the center of the selected ligand's XYZ bounding box (midpoint between minimum and maximum
+    coordinates). Box dimensions are the ligand XYZ span plus twice the chosen padding. AutoGrid
+    dimensions are converted to integer grid points using the selected spacing and rounded upward.
   </p>
   <div class="warning">
     <strong>Validation is essential:</strong> this is a pocket-definition utility, not a docking
@@ -205,9 +213,11 @@ document.getElementById("calculateBtn").addEventListener("click", () => {
 
   const padding = Number(document.getElementById("padding").value);
   const minSize = Number(document.getElementById("minSize").value);
+  const spacing = Number(document.getElementById("spacing").value);
   const exhaustiveness = Number(document.getElementById("exhaustiveness").value);
 
-  if (![padding,minSize,exhaustiveness].every(Number.isFinite) || padding < 0 || minSize <= 0) {
+  if (![padding,minSize,spacing,exhaustiveness].every(Number.isFinite) ||
+      padding < 0 || minSize <= 0 || spacing <= 0 || exhaustiveness < 1) {
     alert("Please enter valid settings.");
     return;
   }
@@ -216,31 +226,81 @@ document.getElementById("calculateBtn").addEventListener("click", () => {
   const ys = selected.atoms.map(a=>a.y);
   const zs = selected.atoms.map(a=>a.z);
 
-  const center_x = mean(xs);
-  const center_y = mean(ys);
-  const center_z = mean(zs);
+  // IMPORTANT:
+  // Use the center of the ligand bounding box, not the arithmetic centroid.
+  // This makes the generated box symmetric around the complete ligand extent.
+  const minX = Math.min(...xs), maxX = Math.max(...xs);
+  const minY = Math.min(...ys), maxY = Math.max(...ys);
+  const minZ = Math.min(...zs), maxZ = Math.max(...zs);
 
-  const size_x = Math.max(max(xs)-min(xs)+2*padding, minSize);
-  const size_y = Math.max(max(ys)-min(ys)+2*padding, minSize);
-  const size_z = Math.max(max(zs)-min(zs)+2*padding, minSize);
+  const center_x = (minX + maxX) / 2;
+  const center_y = (minY + maxY) / 2;
+  const center_z = (minZ + maxZ) / 2;
 
-  lastResult = {center_x,center_y,center_z,size_x,size_y,size_z,padding,minSize,exhaustiveness};
+  // Padding is added to BOTH sides of each dimension.
+  const physical_x = Math.max((maxX-minX) + 2*padding, minSize);
+  const physical_y = Math.max((maxY-minY) + 2*padding, minSize);
+  const physical_z = Math.max((maxZ-minZ) + 2*padding, minSize);
+
+  // AutoGrid requires an integer number of points.
+  // Round UP so the requested physical box is not made smaller by conversion.
+  const npts_x = Math.ceil(physical_x / spacing);
+  const npts_y = Math.ceil(physical_y / spacing);
+  const npts_z = Math.ceil(physical_z / spacing);
+
+  // Physical dimensions represented by integer grid points.
+  const adt_x = npts_x * spacing;
+  const adt_y = npts_y * spacing;
+  const adt_z = npts_z * spacing;
+
+  lastResult = {
+    center_x,center_y,center_z,
+    size_x: physical_x,size_y: physical_y,size_z: physical_z,
+    spacing,npts_x,npts_y,npts_z,
+    adt_x,adt_y,adt_z,
+    padding,minSize,exhaustiveness
+  };
 
   document.getElementById("results").innerHTML = `
-    <div class="success">Grid box calculated from the selected co-crystallized ligand.</div>
-    <table style="margin-top:14px">
+    <div class="success">Box calculated from the complete XYZ bounding range of the selected co-crystallized ligand.</div>
+
+    <h3 style="margin-top:18px">Binding-site center</h3>
+    <table>
       <tr><th>Parameter</th><th>Value (Å)</th></tr>
       <tr><td class="mono">center_x</td><td class="mono">${fmt(center_x)}</td></tr>
       <tr><td class="mono">center_y</td><td class="mono">${fmt(center_y)}</td></tr>
       <tr><td class="mono">center_z</td><td class="mono">${fmt(center_z)}</td></tr>
-      <tr><td class="mono">size_x</td><td class="mono">${fmt(size_x)}</td></tr>
-      <tr><td class="mono">size_y</td><td class="mono">${fmt(size_y)}</td></tr>
-      <tr><td class="mono">size_z</td><td class="mono">${fmt(size_z)}</td></tr>
     </table>
+
+    <h3 style="margin-top:18px">AutoDock Vina box</h3>
+    <table>
+      <tr><th>Parameter</th><th>Value (Å)</th></tr>
+      <tr><td class="mono">size_x</td><td class="mono">${fmt(physical_x)}</td></tr>
+      <tr><td class="mono">size_y</td><td class="mono">${fmt(physical_y)}</td></tr>
+      <tr><td class="mono">size_z</td><td class="mono">${fmt(physical_z)}</td></tr>
+    </table>
+
+    <h3 style="margin-top:18px">AutoGrid / AutoDockTools</h3>
+    <table>
+      <tr><th>Parameter</th><th>Value</th></tr>
+      <tr><td class="mono">spacing</td><td class="mono">${fmt(spacing)} Å</td></tr>
+      <tr><td class="mono">npts_x</td><td class="mono">${npts_x}</td></tr>
+      <tr><td class="mono">npts_y</td><td class="mono">${npts_y}</td></tr>
+      <tr><td class="mono">npts_z</td><td class="mono">${npts_z}</td></tr>
+      <tr><td>Resulting dimensions</td><td class="mono">${fmt(adt_x)} × ${fmt(adt_y)} × ${fmt(adt_z)} Å</td></tr>
+    </table>
+
     <p class="small" style="margin-top:12px">
       Selected ligand: <span class="badge">${selected.resname}</span>
       Chain ${selected.chain || "-"}, residue ${selected.resseq}${selected.icode || ""}.
+      The center is the center of the ligand's XYZ bounding box, not its mass/arithmetic centroid.
     </p>
+
+    <div class="warning" style="margin-top:14px">
+      <strong>Validation:</strong> This is a geometry-based starting box. If published/validated
+      AutoDockTools parameters exist for this PDB, compare them and preferentially reproduce the
+      validated protocol. Redock the co-crystal ligand and check RMSD before docking fenpyroximate.
+    </div>
   `;
   resultsCard.classList.remove("hidden");
 });
@@ -250,8 +310,8 @@ document.getElementById("downloadConfig").addEventListener("click", () => {
   const r = lastResult;
   const config =
 `# AutoDock Vina configuration generated from ${pdbName}.pdb
-# Binding-site center calculated from co-crystallized ligand ${selected.resname}
-# Review/validate by redocking the experimental ligand before production docking.
+# Binding-site center calculated from the bounding box of co-crystallized ligand ${selected.resname}
+# Validate by redocking the experimental ligand before production docking.
 
 receptor = ${pdbName}.pdbqt
 ligand = fenpyroximate.pdbqt
@@ -269,6 +329,32 @@ num_modes = 20
 energy_range = 4
 `;
   downloadBlob(config, `${pdbName}_vina_config.txt`, "text/plain");
+});
+
+document.getElementById("downloadADT").addEventListener("click", () => {
+  if (!lastResult) return;
+  const r = lastResult;
+
+  const adt =
+`# AutoDockTools / AutoGrid grid parameters
+# PDB: ${pdbName}.pdb
+# Co-crystallized ligand: ${selected.resname}
+# Chain: ${selected.chain || "-"}
+# Residue: ${selected.resseq}${selected.icode || ""}
+#
+# IMPORTANT:
+# npts is generated by rounding UP the requested physical box
+# dimension / spacing. Confirm the convention in your ADT version
+# and validate by redocking the reference ligand.
+
+spacing = ${fmt(r.spacing)}
+npts = ${r.npts_x} ${r.npts_y} ${r.npts_z}
+center = ${fmt(r.center_x)} ${fmt(r.center_y)} ${fmt(r.center_z)}
+
+# Approximate resulting dimensions (npts * spacing):
+# ${fmt(r.adt_x)} ${fmt(r.adt_y)} ${fmt(r.adt_z)} Angstrom
+`;
+  downloadBlob(adt, `${pdbName}_autogrid_parameters.txt`, "text/plain");
 });
 
 document.getElementById("downloadLigand").addEventListener("click", () => {
