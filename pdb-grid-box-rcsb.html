@@ -533,15 +533,22 @@ document.getElementById("calculateBtn").addEventListener("click", () => {
 });
 
 document.getElementById("downloadConfig").addEventListener("click", () => {
-  if (!lastResult) return;
+  if (!lastResult || !selected) return;
+
   const r = lastResult;
+
+  // Use the same filenames as the protein and ligand downloads
+  const proteinFilename = `${pdbName}_protein.pdbqt`;
+  const ligandFilename =
+    `${pdbName}_${selected.resname}_${selected.resseq}_ligand.pdbqt`;
+
   const config =
 `# AutoDock Vina configuration generated from ${pdbName}.pdb
 # Binding-site center calculated from the bounding box of co-crystallized ligand ${selected.resname}
 # Validate by redocking the experimental ligand before production docking.
 
-receptor = ${pdbName}.pdbqt
-ligand = ligand.pdbqt
+receptor = ${proteinFilename}
+ligand = ${ligandFilename}
 
 center_x = ${fmt(r.center_x)}
 center_y = ${fmt(r.center_y)}
@@ -555,9 +562,13 @@ exhaustiveness = ${Math.round(r.exhaustiveness)}
 num_modes = 10
 energy_range = 4
 `;
-  downloadBlob(config, `${pdbName}_vina_config.txt`, "text/plain");
-});
 
+  downloadBlob(
+    config,
+    `${pdbName}_vina_config.txt`,
+    "text/plain"
+  );
+});
 document.getElementById("downloadADT").addEventListener("click", () => {
   if (!lastResult) return;
   const r = lastResult;
